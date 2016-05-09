@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="GroovyMongoDB" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" id="50a15b03-e3c5-444b-b488-dae8f9808f09" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite name="GroovyMongoTestSuite" id="984401ae-8777-4f79-bb3e-45d6f1c51cb4"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" id="cd1cebed-45b7-4dc3-aa13-aa415c581e26"><con:settings/><con:testStep type="groovy" name="MongoCreate" id="0bab42e6-5558-484d-b9d9-c6b8e512c97f"><con:settings/><con:config><script>import com.gmongo.GMongo
+
+def mongo = new GMongo()
+def db = mongo.getDB('test')
+
+db.invoices &lt;&lt; [id: 'inv1', company: 'test company1', amount: '100.00']
+db.invoices &lt;&lt; [id: 'inv2', company: 'test company2', amount: '200.00']
+</script></con:config></con:testStep><con:testStep type="groovy" name="MongoQuery" id="01b6bad9-5797-4e67-b813-2e511869cef7"><con:settings/><con:config><script>import com.gmongo.GMongo
+
+def mongo = new GMongo('localhost:27017')
+def db = mongo.getDB('test')
+
+//Get a single invoice object
+log.info db.invoices.findOne()
+
+//Get a single invoice object with id=inv2
+log.info db.invoices.findOne(id: 'inv2')
+
+//Iterate over all invoice objects
+db.invoices.find().each{invoice->	
+	log.info invoice
+}
+
+//db.invoices.update([id: 'inv2'], [$set: [amount: '500']])
+
+
+//db.invoices.remove([id: 'inv1'])
+</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

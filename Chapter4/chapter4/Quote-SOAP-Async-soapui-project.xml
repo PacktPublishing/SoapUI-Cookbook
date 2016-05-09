@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e07aedbe-d786-408e-8a09-67a401fe0d28" activeEnvironment="Default" name="Quote SOAP Async" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="4844390a-8245-4775-89e8-10fffb11681b" wsaVersion="200508" name="QuotePortBinding" type="wsdl" bindingName="{http://soapui.cookbook.samples/contract/quote}QuotePortBinding" soapVersion="1_1" anonymous="optional" definition="file:/soapui-cookbook/chapter4/quote_v1.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/soapui-cookbook/chapter4/quote_v1.wsdl"><con:part><con:url>file:/soapui-cookbook/chapter4/quote_v1.wsdl</con:url><con:content><![CDATA[<definitions name="QuoteServiceV1" targetNamespace="http://soapui.cookbook.samples/contract/quote" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/02/addressing/metadata" xmlns:tns="http://soapui.cookbook.samples/contract/quote" xmlns:qte="http://soapui.cookbook.samples/schema/quote" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <documentation>Service: QuoteService Async - One way requestQuote - One way receiveQuote Callback
+		Version: 1.0
+		Owner: SoapUI
+		Cookbook</documentation>
+  <types>
+    <documentation>Notes:
+		1) For simplicity I have chosen to define the types locally. Normally I would use a separate schema file and include/import it.
+		2) JAXWS Wrapper style (which Apache CXF uses) requires that the operation name matches the local name for the 'wrapper' i.e. requestQuote
+		   - this is an implementation specific choice rather than any kind of WSDL/Schema standard. If you don't do this it will still work, but 
+		   an info message will be displayed by wsdl2java.</documentation>
+    <xsd:schema targetNamespace="http://soapui.cookbook.samples/schema/quote" elementFormDefault="qualified" version="1.0" xmlns="http://soapui.cookbook.samples/schema/quote">
+      <xsd:element name="requestQuote" type="QuoteRequestType"/>
+      <xsd:element name="receiveQuote" type="QuoteDocumentType"/>
+      <xsd:complexType name="QuoteRequestType">
+        <xsd:sequence>
+          <xsd:element name="productIdsToQuoteFor" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="QuoteDocumentType">
+        <xsd:sequence>
+          <xsd:element name="quoteNo" type="xsd:string"/>
+          <xsd:element name="amount" type="xsd:double"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+  <message name="RequestQuoteRequestMessage">
+    <part name="quoteRef" element="qte:requestQuote"/>
+  </message>
+  <message name="ReceiveQuoteRequestMessage">
+    <part name="quoteDocument" element="qte:receiveQuote"/>
+  </message>
+  <portType name="QuotePortType">
+    <documentation>Request and Receive A Quote.</documentation>
+    <operation name="requestQuote">
+      <input name="RequestQuoteInput" message="tns:RequestQuoteRequestMessage"/>
+    </operation>
+    <operation name="receiveQuote">
+      <input name="ReceiveQuoteInput" message="tns:ReceiveQuoteRequestMessage"/>
+    </operation>
+  </portType>
+  <binding name="QuotePortBinding" type="tns:QuotePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="requestQuote">
+      <soap:operation soapAction="http://soapui.cookbook.samples/requestQuoteRequest/request"/>
+      <input name="RequestQuoteInput">
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+    <operation name="receiveQuote">
+      <soap:operation soapAction="http://soapui.cookbook.samples/receiveQuoteRequest/request"/>
+      <input name="ReceiveQuoteInput">
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="QuoteServiceV1">
+    <port name="QuotePort" binding="tns:QuotePortBinding">
+      <soap:address location="http://localhost:9001/ws/quote/v1"/>
+      <wsp:Policy>
+        <wsam:Addressing>
+          <wsp:Policy>
+            <wsam:NonAnonymousResponses/>
+          </wsp:Policy>
+        </wsam:Addressing>
+      </wsp:Policy>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://bear-software-macpro.home:8088/mockQuotePortBinding</con:endpoint><con:endpoint>http://localhost:9001/ws/quote/v1</con:endpoint></con:endpoints><con:operation id="1eeb8d95-eeeb-42d7-a86d-d600af8452ba" isOneWay="false" action="http://soapui.cookbook.samples/receiveQuoteRequest/request" name="receiveQuote" bindingOperationName="receiveQuote" type="One-Way" inputName="ReceiveQuoteInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3029a9a4-5017-44fc-ae79-34113da7cf45" name="Simulate Call-back To MockResponse" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8089/receiveQuote</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:quot="http://soapui.cookbook.samples/schema/quote">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <quot:receiveQuote>
+         <quot:quoteNo>?</quot:quoteNo>
+         <quot:amount>?</quot:amount>
+      </quot:receiveQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="TRUE" version="200508" action="http://soapui.cookbook.samples/receiveQuoteRequest/request" addDefaultAction="true" generateMessageId="true" replyTo=""/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="7f3b53f4-7646-4fd8-abcb-1503e7a1f1e7" isOneWay="false" action="http://soapui.cookbook.samples/requestQuoteRequest/request" name="requestQuote" bindingOperationName="requestQuote" type="One-Way" inputName="RequestQuoteInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="4fe1a93b-f2b3-4b5e-800a-c38e2fce43fc" name="Request Quote From Mock" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockQuotePortBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:quot="http://soapui.cookbook.samples/schema/quote">
+   <soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing"/>
+   <soapenv:Body>
+      <quot:requestQuote>
+         <quot:productIdsToQuoteFor>?</quot:productIdsToQuoteFor>
+      </quot:requestQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="TRUE" version="200508" action="http://soapui.cookbook.samples/requestQuoteRequest/request" replyTo="http://localhost:8089/receiveQuote" generateMessageId="true" addDefaultAction="false"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="f17e7ac5-dfce-4590-904b-08e9c64568b4" name="TestSuite - Async Call &amp; Callback"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="7677c019-ce46-4fef-b70c-b5cf8620558d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Main TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="129d04f2-4182-4a86-bb71-46ac4faf4629" name="Call requestQuote"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>QuotePortBinding</con:interface><con:operation>requestQuote</con:operation><con:request name="Call requestQuote" id="b72830c5-e6db-499e-9e10-ba1162bdf098" useWsReliableMessaging="false" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockQuotePortBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:quot="http://soapui.cookbook.samples/schema/quote">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <quot:requestQuote>
+         <quot:products>?</quot:products>
+      <quot:productIdsToQuoteFor/></quot:requestQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://soapui.cookbook.samples/requestQuoteRequest/request" mustUnderstand="TRUE" version="200508" replyTo="http://localhost:8089/receiveQuote" generateMessageId="false" messageID="${#TestSuite#quoteMessageId}" addDefaultTo="true" addDefaultAction="true"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="mockresponse" name="Wait For receiveQuote Call-back" id="b5a60bfd-d447-4e84-b870-5d728bcaace1"><con:settings/><con:config xsi:type="con:MockResponseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>QuotePortBinding</con:interface><con:operation>receiveQuote</con:operation><con:path>/receiveQuote</con:path><con:port>8089</con:port><con:timeout>10000</con:timeout><con:response id="53a07e5b-2038-40e0-b478-32dd1a5b8f4e"><con:settings/><con:responseContent xsi:nil="true"/><con:wsaConfig mustUnderstand="NONE" version="200508"/></con:response><con:assertion type="WS-A Request Assertion" id="7ed14eb4-630c-4a55-b168-23eaac6fd8bc"><con:configuration><asertWsaAction>true</asertWsaAction><asertWsaTo>true</asertWsaTo><assertWsaReplyTo>false</assertWsaReplyTo><assertWsaMessageId>true</assertWsaMessageId></con:configuration></con:assertion><con:assertion type="XPath Match" id="2370ef06-6a0b-4ade-811f-a0a8dbf4ff73" name="Verify messageId matches original"><con:configuration><path>declare namespace wsa='http://www.w3.org/2005/08/addressing';
+//wsa:MessageID[1]</path><content>${#TestSuite#quoteMessageId}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase id="da6242ea-7eac-443f-a807-1a6e86b78ab5" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Callback TestCase" searchProperties="true"><con:settings/><con:testStep type="delay" name="Sleep 5 seconds" id="eb9e116b-692d-452a-bbfd-0bd1d2d2d7e3"><con:settings/><con:config><delay>5000</delay></con:config></con:testStep><con:testStep type="request" name="Call receiveQuote" id="7de4af9c-64d2-49e9-9584-9c8e2750fa1c"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>QuotePortBinding</con:interface><con:operation>receiveQuote</con:operation><con:request name="Call receiveQuote" id="93d3bd0c-eb83-4e31-a5b5-730de6b17d00" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8089/receiveQuote</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:quot="http://soapui.cookbook.samples/schema/quote">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <quot:receiveQuote>
+         <quot:quoteNo>${quoteId}</quot:quoteNo>
+         <quot:amount>${amount}</quot:amount>
+      </quot:receiveQuote>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="TRUE" version="200508" addDefaultAction="true" addDefaultTo="true" messageID="${messageID}"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>eb9e116b-692d-452a-bbfd-0bd1d2d2d7e3</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties><con:property><con:name>quoteMessageId</con:name><con:value>ABCDEF</con:value></con:property></con:properties><con:reportParameters/></con:testSuite><con:mockService id="004af35a-38d7-4115-bfb1-73ffacf24eb1" port="8088" path="/mockQuotePortBinding" host="bear-software-macpro.home" name="QuotePortBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="One-way requestQuote" id="3b82a29b-001c-48d2-87b2-cb579ae6343b" interface="QuotePortBinding" operation="requestQuote"><con:settings/><con:defaultResponse>Trigger Callback receiveQuote</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Trigger Callback receiveQuote" id="1747db2a-ed5b-4778-80c7-118c653ba53f" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:script>import com.eviware.soapui.support.types.StringToObjectMap
+import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestRequestStep
+
+def requestXMLHolder = new com.eviware.soapui.support.XmlHolder(mockRequest.requestContent)
+requestXMLHolder.declareNamespace("wsa","http://www.w3.org/2005/08/addressing")
+def replyTo=requestXMLHolder.getNodeValue("//wsa:ReplyTo[1]/wsa:Address[1]")
+def requestMessageId=requestXMLHolder.getNodeValue("//wsa:MessageID[1]")
+
+log.info "replyTo: $replyTo messageId: $requestMessageId"
+log.info "Triggering call back.."
+
+def map = new StringToObjectMap()
+map.put("messageID", requestMessageId)
+map.put("quoteId", "12345")
+map.put("amount", "777")
+//Start callback TestCase - run with aysnc=true i.e. start it now don't wait for this response
+//to be dispatched first.
+def testSuite = context.mockService.project.getTestSuiteByName("TestSuite - Async Call &amp; Callback")
+def callBackTestCase = testSuite.getTestCaseByName("Callback TestCase")
+def callBackRequest = (WsdlTestRequestStep) callBackTestCase.getTestStepsOfType(WsdlTestRequestStep.class).get(0)
+callBackRequest.testRequest.setEndpoint(replyTo)
+callBackTestCase.run(map, true)
+log.info "Call back triggered."
+</con:script><con:responseContent/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/requestQuoteRequest/request"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

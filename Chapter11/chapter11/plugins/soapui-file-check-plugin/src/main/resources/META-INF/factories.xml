@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:soapui-factories xmlns:tns="http://eviware.com/soapui/config">
+    <tns:factory id="FileCheckTestStep" factoryType="com.eviware.soapui.impl.wsdl.teststeps.registry.WsdlTestStepFactory" 
+   factoryClass="sample.factories.FileCheckTestStepFactory"/>      
+</tns:soapui-factories>

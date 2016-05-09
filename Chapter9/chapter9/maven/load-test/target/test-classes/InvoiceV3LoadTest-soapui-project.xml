@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="c5dce822-d2a9-40e1-b5fb-612877f2a0f5" activeEnvironment="Default" name="InvoiceV3LoadTest" resourceRoot="" soapui-version="5.1.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="a330b924-2ec3-448b-b816-9e7ba8a9dae4" wsaVersion="NONE" name="InvoicePortBinding" type="wsdl" bindingName="{http://soapui.cookbook.samples/contract/invoice}InvoicePortBinding" soapVersion="1_1" anonymous="optional" definition="file:/soapui-cookbook/chapter9/invoicev3/wsdl/Invoice_v3.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/soapui-cookbook/chapter9/invoicev3/wsdl/Invoice_v3.wsdl"><con:part><con:url>file:/soapui-cookbook/chapter9/invoicev3/wsdl/Invoice_v3.wsdl</con:url><con:content><![CDATA[<definitions name="InvoiceServiceV3" targetNamespace="http://soapui.cookbook.samples/contract/invoice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soapui.cookbook.samples/contract/invoice" xmlns:inv="http://soapui.cookbook.samples/schema/invoice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <documentation>Service: InvoiceService
+		Version: 3.0
+		Owner: SoapUI
+		Cookbook</documentation>
+  <types>
+    <documentation>Notes:
+		1) For simplicity I have chosen to define the types locally. Normally I would use a separate schema file and include/import it.
+		2) JAXWS Wrapper style (which Apache CXF uses) requires that the operation name matches the local name for the 'wrapper' i.e. retrieveInvoice 
+		   - this is an implementation specific choice rather than any kind of WSDL/Schema standard. If you don't do this it will still work, but 
+		   an info message will be displayed by wsdl2java.</documentation>
+    <xsd:schema targetNamespace="http://soapui.cookbook.samples/schema/invoice" elementFormDefault="qualified" version="3.0" xmlns="http://soapui.cookbook.samples/schema/invoice">
+      <xsd:element name="retrieveInvoice" type="InvoiceRefType"/>
+      <xsd:element name="createInvoice" type="InvoiceDocumentType"/>
+      <xsd:element name="updateInvoice" type="InvoiceDocumentType"/>
+      <xsd:element name="deleteInvoice" type="InvoiceRefType"/>
+      <xsd:element name="InvoiceDocument" type="InvoiceDocumentType"/>
+      <xsd:element name="Acknowledgement" type="InvoiceRefType"/>
+      <xsd:complexType name="InvoiceRefType">
+        <xsd:sequence>
+          <xsd:element name="invoiceNo" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="InvoiceDocumentType">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:string"/>
+          <xsd:element name="customerRef" type="xsd:string"/>
+          <xsd:element name="amount" type="xsd:double"/>
+          <xsd:element name="dueDate" type="xsd:date"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+  <message name="RetrieveInvoiceRequestMessage">
+    <part name="invoiceRef" element="inv:retrieveInvoice"/>
+  </message>
+  <message name="RetrieveInvoiceResponseMessage">
+    <part name="invoiceDocument" element="inv:InvoiceDocument"/>
+  </message>
+  <message name="CreateInvoiceRequestMessage">
+    <part name="invoiceDoc" element="inv:createInvoice"/>
+  </message>
+  <message name="CreateInvoiceResponseMessage">
+    <part name="acknowledgement" element="inv:Acknowledgement"/>
+  </message>
+  <message name="UpdateInvoiceRequestMessage">
+    <part name="invoiceDoc" element="inv:updateInvoice"/>
+  </message>
+  <message name="UpdateInvoiceResponseMessage">
+    <part name="acknowledgement" element="inv:Acknowledgement"/>
+  </message>
+  <message name="DeleteInvoiceRequestMessage">
+    <part name="invoiceRef" element="inv:deleteInvoice"/>
+  </message>
+  <portType name="InvoicePortType">
+    <documentation>Retrieve and Create An Invoice.</documentation>
+    <operation name="retrieveInvoice">
+      <input name="RetrieveInvoiceInput" message="tns:RetrieveInvoiceRequestMessage"/>
+      <output name="RetrieveInvoiceOutput" message="tns:RetrieveInvoiceResponseMessage"/>
+    </operation>
+    <operation name="createInvoice">
+      <input name="CreateInvoiceInput" message="tns:CreateInvoiceRequestMessage"/>
+      <output name="CreateInvoiceOutput" message="tns:CreateInvoiceResponseMessage"/>
+    </operation>
+    <operation name="updateInvoice">
+      <input name="UpdateInvoiceInput" message="tns:UpdateInvoiceRequestMessage"/>
+      <output name="UpdateInvoiceOutput" message="tns:UpdateInvoiceResponseMessage"/>
+    </operation>
+    <operation name="deleteInvoice">
+      <input name="DeleteInvoiceInput" message="tns:DeleteInvoiceRequestMessage"/>
+    </operation>
+  </portType>
+  <binding name="InvoicePortBinding" type="tns:InvoicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="retrieveInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/retrieveInvoiceRequest/request"/>
+      <input name="RetrieveInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="RetrieveInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="createInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/createInvoiceRequest/request"/>
+      <input name="CreateInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="CreateInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="updateInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/updateInvoiceRequest/request"/>
+      <input name="UpdateInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="UpdateInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="deleteInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/deleteInvoiceRequest/request"/>
+      <input name="DeleteInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="InvoiceServiceV3">
+    <port name="InvoicePort" binding="tns:InvoicePortBinding">
+      <soap:address location="http://localhost:9003/ws/invoice/v3"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://bear-software-macpro.home:8088/mockInvoicePortBinding</con:endpoint><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint></con:endpoints><con:operation id="e3d4b220-c8ee-4047-ba9c-cd38e4feff4f" isOneWay="false" action="http://soapui.cookbook.samples/createInvoiceRequest/request" name="createInvoice" bindingOperationName="createInvoice" type="Request-Response" outputName="CreateInvoiceOutput" inputName="CreateInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="7e765b11-6c9b-4c44-bd3d-1182c0a69af8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>1</inv:id>
+         <inv:customerRef>cust1</inv:customerRef>
+         <inv:amount>10101</inv:amount>
+         <inv:dueDate>2014-11-03Z</inv:dueDate>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/createInvoiceRequest/request"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="c1e3a2be-6172-4e22-9fcb-5bdd6ec02eb8" isOneWay="false" action="http://soapui.cookbook.samples/deleteInvoiceRequest/request" name="deleteInvoice" bindingOperationName="deleteInvoice" type="One-Way" inputName="DeleteInvoiceInput" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="dc6f7405-a274-43df-a77c-d8d78f23a029" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:deleteInvoice>
+         <inv:invoiceNo>?</inv:invoiceNo>
+      </inv:deleteInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/deleteInvoiceRequest/request"/></con:call></con:operation><con:operation id="8488f576-d679-4f2f-9644-da2c24de0b47" isOneWay="false" action="http://soapui.cookbook.samples/retrieveInvoiceRequest/request" name="retrieveInvoice" bindingOperationName="retrieveInvoice" type="Request-Response" outputName="RetrieveInvoiceOutput" inputName="RetrieveInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9a45397e-5c67-4a86-a3b5-7e6693586701" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:retrieveInvoice>
+         <inv:invoiceNo>?</inv:invoiceNo>
+      </inv:retrieveInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/retrieveInvoiceRequest/request"/></con:call></con:operation><con:operation id="bad930af-d031-41b3-8d85-b4295e6b4c59" isOneWay="false" action="http://soapui.cookbook.samples/updateInvoiceRequest/request" name="updateInvoice" bindingOperationName="updateInvoice" type="Request-Response" outputName="UpdateInvoiceOutput" inputName="UpdateInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="21dbecc5-459d-4c79-86c6-9b7897c87019" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:updateInvoice>
+         <inv:id>?</inv:id>
+         <inv:customerRef>?</inv:customerRef>
+         <inv:amount>?</inv:amount>
+         <inv:dueDate>?</inv:dueDate>
+      </inv:updateInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/updateInvoiceRequest/request"/></con:call></con:operation></con:interface><con:testSuite id="f2f65da0-4617-4dba-b674-70a771bce1c5" name="TestSuite-Seperate Data Per Thread"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="f2784a78-e85a-41a9-b2e1-d98c5e6df12e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CreateInvoiceTestCase-Seperate" searchProperties="true"><con:settings/><con:testStep type="groovy" name="GetNextTestDataRow" id="28dd082d-fcac-4b45-883f-b2f141174eba"><con:settings/><con:config><script>def rowCount = Integer.parseInt(context.expand('${#TestCase#rowCounter}'))
+
+//Get test data rows from load test context
+assert context.LoadTestContext!=null,"No Test Data - This TestCase must be run from the load test."
+def testDataRows = context.LoadTestContext["testDataRows"]
+
+//Get next row of csv test data and split it into values
+def rowItems = testDataRows[rowCount].split(/,/)
+
+//Add the values to TestCase context for use in requests
+context["invoiceId"]=rowItems[0]
+context["customerRef"]=rowItems[1]+"-(ThreadIndex="+context["ThreadIndex"]+" RunCount: "+context["RunCount"]+")"
+context["amount"]=rowItems[2]
+def date=Date.parse("dd/MM/yyyy",rowItems[3]);
+context["dueDate"]=date.format("yyyy-MM-dd'Z'") //parse to xsd:date format
+
+//Pre increment rowCount and check if rowcount is > last row, if so reset it.
+if (++rowCount==testDataRows.size()) rowCount=0
+
+//Update roCounter property on TestCase
+testRunner.testCase.setPropertyValue("rowCounter", String.valueOf(rowCount))
+
+</script></con:config></con:testStep><con:testStep type="request" name="CreateInvoice" id="5a0aeedd-ca58-4585-882e-1bc88c65e4bc"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>InvoicePortBinding</con:interface><con:operation>createInvoice</con:operation><con:request name="CreateInvoice" id="b1a280d8-7d4b-47fe-981f-3f11da0e0a11"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>${invoiceId}</inv:id>
+         <inv:customerRef>${customerRef}</inv:customerRef>
+         <inv:amount>${amount}</inv:amount>
+         <inv:dueDate>${dueDate}</inv:dueDate>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7e453de9-0c23-42bc-b210-1aedad29d22b"/><con:assertion type="XPath Match" id="4299ca81-e81b-4387-b866-3c46e9f9ce06" name="XPath Match"><con:configuration><path>declare namespace ns1='http://soapui.cookbook.samples/schema/invoice';
+//ns1:Acknowledgement[1]/ns1:invoiceNo[1]</path><content>${CreateInvoice#Request#declare namespace inv='http://soapui.cookbook.samples/schema/invoice'; //inv:createInvoice[1]/inv:id[1]}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="d9b04001-17ec-4183-884f-abc5a4d6e6c3" name="SeperateDataPerThreadLoadTest"><con:settings/><con:threadCount>10</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>10000</con:testLimit><con:limitType>COUNT</con:limitType><con:loadStrategy><con:type>Simple</con:type><con:config><testDelay>0</testDelay><randomFactor>0.0</randomFactor></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval><con:setupScript>log.info "Load test setup script:"
+log.info "Loading test file data into load test context..." 
+
+context["testDataRows"]=[]
+
+File testDataFile = new File("/temp/invoices.csv")
+testDataFile.eachLine {content, lineNumber -> 
+   context["testDataRows"] &lt;&lt; content
+}</con:setupScript><con:tearDownScript>log.info "Load test teardown script:"
+//log.info "TestCase rowCounter: " +context.expand( '${#TestCase#rowCounter}' )
+</con:tearDownScript><con:reportParameters/></con:loadTest><con:properties><con:property><con:name>rowCounter</con:name><con:value>0</con:value></con:property></con:properties><con:reportParameters/><con:breakPoints><con:testStepId>28dd082d-fcac-4b45-883f-b2f141174eba</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties/><con:setupScript>log.info "hello from test suite setup"</con:setupScript><con:tearDownScript>log.info "hello from test suite teardown"</con:tearDownScript><con:reportParameters/></con:testSuite><con:testSuite id="fe8e0837-16e8-42b1-a8e9-cdb95b7673a1" name="TestSuite-Shared Datasources"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="904b5a3e-b9be-4be5-9f79-1a9c336adecc" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CreateInvoiceTestCase-Shared Data Between Threads" searchProperties="true"><con:settings/><con:testStep type="calltestcase" name="GetNextRowCounter" id="cbebf927-be60-4557-a522-f2b4bda0f71b"><con:settings/><con:config xsi:type="con:RunTestCaseStep" copyLoadTestProperties="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>a02cb709-1a0e-4692-bea6-072b26fdc849</con:targetTestCase><con:properties><con:property><con:name>returnRowCounter</con:name><con:value>0</con:value></con:property></con:properties><con:returnProperties><con:entry>returnRowCounter</con:entry></con:returnProperties><con:runMode>SINGLETON_AND_WAIT</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="GetNextTestDataRow" id="ff9135fb-1c73-4d76-a654-130e99522993"><con:settings/><con:config><script>//Get result of calling RowCounterTestCase
+def rowCount = Integer.parseInt(context.expand( '${GetNextRowCounter#returnRowCounter}' ))
+
+//Get test data rows from load test context
+assert context.LoadTestContext!=null,"No Test Data - This TestCase must be run from the laod test."
+def testDataRows = context.LoadTestContext["testDataRows"]
+
+//Get next row of csv test data and split it into values
+def rowItems = testDataRows[rowCount].split(/,/)
+
+//Add the values to TestCase context for use in requests
+context["invoiceId"]=rowItems[0]
+context["customerRef"]=rowItems[1]+"-(ThreadIndex="+context["ThreadIndex"]+" RunCount: "+context["RunCount"]+")"
+context["amount"]=rowItems[2]
+def date=Date.parse("dd/MM/yyyy",rowItems[3]);
+context["dueDate"]=date.format("yyyy-MM-dd'Z'") //parse to xsd:date format
+</script></con:config></con:testStep><con:testStep type="request" name="CreateInvoice" id="ff5fc6d4-98fc-4bdb-8605-0e0d0cbe3162"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>InvoicePortBinding</con:interface><con:operation>createInvoice</con:operation><con:request name="CreateInvoice" id="b1a280d8-7d4b-47fe-981f-3f11da0e0a11"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>${invoiceId}</inv:id>
+         <inv:customerRef>${customerRef}</inv:customerRef>
+         <inv:amount>${amount}</inv:amount>
+         <inv:dueDate>${dueDate}</inv:dueDate>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7e453de9-0c23-42bc-b210-1aedad29d22b"/><con:assertion type="XPath Match" id="4299ca81-e81b-4387-b866-3c46e9f9ce06" name="XPath Match"><con:configuration><path>declare namespace ns1='http://soapui.cookbook.samples/schema/invoice';
+//ns1:Acknowledgement[1]/ns1:invoiceNo[1]</path><content>${CreateInvoice#Request#declare namespace inv='http://soapui.cookbook.samples/schema/invoice'; //inv:createInvoice[1]/inv:id[1]}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="55ebd440-f803-436e-934f-fde2ef740809" name="LoadTestSharedDataBetweenThreads"><con:settings/><con:threadCount>10</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>1000</con:testLimit><con:limitType>COUNT_PER_THREAD</con:limitType><con:loadStrategy><con:type>Simple</con:type><con:config><testDelay>100</testDelay><randomFactor>0.0</randomFactor></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:statisticsLogFolder/><con:statisticsLogInterval>0</con:statisticsLogInterval><con:logStatisticsOnThreadChange>false</con:logStatisticsOnThreadChange><con:cancelOnReachedLimit>false</con:cancelOnReachedLimit><con:cancelExcessiveThreads>false</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval><con:setupScript>log.info "Load test setup script:"
+log.info "Loading test file data into load test context..." 
+
+context["testDataRows"]=[]
+
+File testDataFile = new File("/temp/invoices.csv")
+testDataFile.eachLine {content, lineNumber -> 
+   context["testDataRows"] &lt;&lt; content
+}
+
+
+//log.info "Resetting rowCounter..."
+//loadTestRunner.loadTest.testCase.setPropertyValue("rowCounter", "0")
+//log.info "TestCase rowCounter=" +context.expand( '${#TestCase#rowCounter}' )
+</con:setupScript><con:updateStatisticsPerTestStep>false</con:updateStatisticsPerTestStep><con:reportParameters/></con:loadTest><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>cbebf927-be60-4557-a522-f2b4bda0f71b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>ff9135fb-1c73-4d76-a654-130e99522993</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>ff5fc6d4-98fc-4bdb-8605-0e0d0cbe3162</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase id="a02cb709-1a0e-4692-bea6-072b26fdc849" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="RowCounterTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="IncrementOrResetSharedRowCounter" id="8b410a45-2adc-4be7-9b92-b1886adef1b3"><con:settings/><con:config><script>//Get RowCounterTestCase row counter property
+int rowCount = Integer.parseInt(context.expand( '${#TestCase#returnRowCounter}' ))
+
+//Get test data rows from load test context
+//assert context.LoadTestContext!=null,"No Test Data - This TestCase expects test data passed in the context."
+//def testDataRows = context.LoadTestContext["testDataRows"]
+
+//Pre increment rowCount and check if rowcount is > last row, if so reset it.
+if (++rowCount==10) rowCount=0
+
+//Update roCounter property on TestCase (also the returned/shared row count)
+testRunner.testCase.setPropertyValue("returnRowCounter", String.valueOf(rowCount))
+
+</script></con:config></con:testStep><con:properties><con:property><con:name>returnRowCounter</con:name><con:value>1</con:value></con:property></con:properties><con:reportParameters/><con:breakPoints><con:testStepId>8b410a45-2adc-4be7-9b92-b1886adef1b3</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite id="fc9e12d2-91d9-420d-b307-eb7d2e84ac82" name="TestSuite-Shared Distributed Datasource"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="f2aa0199-3a43-4394-aea3-7f485eff4ffb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="DistributedDatasourceTestCase" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="GetNextInvoiceTestData" id="c23c0746-b2f0-4f28-9bd0-153f30a7a603"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="0e8bee8c-ebbe-4d75-9cce-9d8d1a35ef3d" name="GetNextInvoiceTestData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:9000/test-data-service/invoice</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="request" name="CreateInvoice" id="452359f1-c303-4a9e-b745-553004dc255f"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>InvoicePortBinding</con:interface><con:operation>createInvoice</con:operation><con:request name="CreateInvoice" id="b1a280d8-7d4b-47fe-981f-3f11da0e0a11"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>${GetNextInvoiceTestData#Response#declare namespace ns2='http://v1.invoice.rest'; //ns2:invoice[1]/id[1]}</inv:id>
+         <inv:customerRef>${GetNextInvoiceTestData#Response#declare namespace ns2='http://v1.invoice.rest'; //ns2:invoice[1]/companyName[1]}</inv:customerRef>
+         <inv:amount>${GetNextInvoiceTestData#Response#declare namespace ns2='http://v1.invoice.rest'; //ns2:invoice[1]/amount[1]}</inv:amount>
+         <inv:dueDate>2014-12-07Z</inv:dueDate>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7e453de9-0c23-42bc-b210-1aedad29d22b"/><con:assertion type="XPath Match" id="4299ca81-e81b-4387-b866-3c46e9f9ce06" name="XPath Match"><con:configuration><path>declare namespace ns1='http://soapui.cookbook.samples/schema/invoice';
+//ns1:Acknowledgement[1]/ns1:invoiceNo[1]</path><content>${CreateInvoice#Request#declare namespace inv='http://soapui.cookbook.samples/schema/invoice'; //inv:createInvoice[1]/inv:id[1]}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="a1e7b5c4-4b02-456b-bc7c-dfa398fb1ccd" name="LoadTest-DistributedSharedDatasource"><con:settings/><con:threadCount>10</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>100</con:testLimit><con:limitType>COUNT</con:limitType><con:loadStrategy><con:type>Simple</con:type><con:config><testDelay>0</testDelay><randomFactor>0.0</randomFactor></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval><con:reportParameters/></con:loadTest><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite id="271ef731-bea9-454a-beab-9cdf01f8bc47" name="TestSuite-ProDatasourceShared"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="51600493-5de4-40ba-9c0b-ad027c65a0ec" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CreateInvoiceTestCase-Pro Datasource Shared" searchProperties="true"><con:settings/><con:testStep type="datasource" name="InvoiceTextDataDataSource" id="766e83fd-624a-4310-a905-81a0656df0f3"><con:settings/><con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSource type="File"><con:configuration><fileName>/soapui-cookbook/chapter9/invoices.csv</fileName><separator>,</separator><trim>true</trim><charset>UTF-8</charset><quotedValues>false</quotedValues></con:configuration></con:dataSource><con:shared>true</con:shared><con:restartShared>true</con:restartShared><con:property>invoiceNo</con:property><con:property>customerRef</con:property><con:property>amount</con:property><con:property>dueDate</con:property><con:startRow/><con:endRow/><con:trimValues>false</con:trimValues><con:entitizeValues>false</con:entitizeValues><con:restartOnRun>true</con:restartOnRun><con:expandProperties>false</con:expandProperties></con:config></con:testStep><con:testStep type="request" name="CreateInvoice" id="08fbea04-325b-4494-a44d-ded6e9e0261a"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>InvoicePortBinding</con:interface><con:operation>createInvoice</con:operation><con:request name="CreateInvoice" id="b1a280d8-7d4b-47fe-981f-3f11da0e0a11"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>${InvoiceTextDataDataSource#invoiceNo}</inv:id>
+         <inv:customerRef>${InvoiceTextDataDataSource#customerRef}</inv:customerRef>
+         <inv:amount>${InvoiceTextDataDataSource#amount}</inv:amount>
+         <inv:dueDate>2014-12-01Z</inv:dueDate>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="7e453de9-0c23-42bc-b210-1aedad29d22b"/><con:assertion type="XPath Match" id="4299ca81-e81b-4387-b866-3c46e9f9ce06" name="XPath Match"><con:configuration><path>declare namespace ns1='http://soapui.cookbook.samples/schema/invoice';
+//ns1:Acknowledgement[1]/ns1:invoiceNo[1]</path><content>${CreateInvoice#Request#declare namespace inv='http://soapui.cookbook.samples/schema/invoice'; //inv:createInvoice[1]/inv:id[1]}</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="89e54e68-0c09-42cb-9719-8f7707073e91" name="LoadTest-ProDatasourceShared"><con:settings/><con:threadCount>10</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>10000</con:testLimit><con:limitType>COUNT</con:limitType><con:loadStrategy><con:type>Simple</con:type><con:config><testDelay>0</testDelay><randomFactor>0.0</randomFactor></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval><con:reportParameters/></con:loadTest><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

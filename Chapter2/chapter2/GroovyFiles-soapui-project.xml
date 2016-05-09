@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="GroovyFiles" resourceRoot="" soapui-version="5.0.0" id="9db79fc0-321e-49d4-8601-79ce9c99fd6a" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite name="TestSuite" id="0f7ad18a-a23a-4a88-8281-d34d9e04f06a"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GroovyFileIteratorTestCase" searchProperties="true" id="ec851b3e-61f8-476b-9df2-b7648ea39ab5"><con:settings/><con:testStep type="groovy" name="LoadAllTestDataFromFile" id="8816a57d-a28d-44b0-a804-0be8f6405e00"><con:settings/><con:config><script>context["rows"]=[]
+
+//Change this to the location of your CSV file.
+File testDataFile = new File("/temp/invoices.csv")
+testDataFile.eachLine {content, lineNumber -> 
+   context["rows"] &lt;&lt; content
+}
+
+//Initialise row counter
+context["currentRowIndex"]=0
+
+return "Loaded ${context["rows"].size()} rows."</script></con:config></con:testStep><con:testStep type="groovy" name="GetNextRowAndExractValues" id="a63dd013-7a69-4652-b9f0-3af9277ce7be"><con:settings/><con:config><script>def currentRowIndex = context["currentRowIndex"]
+
+//Get values from csv row
+def rowItems = context["rows"][currentRowIndex].split(/,/)
+def invoiceId = rowItems[0]
+def invoiceCompany = rowItems[1]
+def invoiceAmount = rowItems[2]
+def invoiceDueDate = rowItems[3] 
+
+//Increment counter
+context["currentRowIndex"] = currentRowIndex + 1
+
+return "Row #$currentRowIndex processed."</script></con:config></con:testStep><con:testStep type="groovy" name="LoopIfMoreRows" id="75eb223e-6680-4406-b51e-2c06ff3d3325"><con:settings/><con:config><script>def currentRowIndex = context["currentRowIndex"]
+
+if (currentRowIndex &lt; context["rows"].size) testRunner.gotoStepByName("GetNextRowAndExractValues")
+</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

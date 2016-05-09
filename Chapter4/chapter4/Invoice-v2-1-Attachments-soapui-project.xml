@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="Invoice v2.1 Attachments" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" id="9cf2c66a-a23c-41a7-a1bb-b0029c48c107" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="InvoicePortBinding" type="wsdl" bindingName="{http://soapui.cookbook.samples/contract/invoice}InvoicePortBinding" soapVersion="1_1" anonymous="optional" definition="file:/soapui-cookbook/chapter4/Invoice_v2_1.wsdl" id="0abcea30-6d7c-4964-aa41-f11c3bae881a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/soapui-cookbook/chapter4/Invoice_v2_1.wsdl"><con:part><con:url>file:/soapui-cookbook/chapter4/Invoice_v2_1.wsdl</con:url><con:content><![CDATA[<definitions name="InvoiceServiceV2" targetNamespace="http://soapui.cookbook.samples/contract/invoice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soapui.cookbook.samples/contract/invoice" xmlns:inv="http://soapui.cookbook.samples/schema/invoice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <documentation>Service: InvoiceService
+		Version: 2.0
+		Owner: SoapUI
+		Cookbook</documentation>
+  <types>
+    <documentation>Notes:
+		1) For simplicity I have chosen to define the types locally. Normally I would use a separate schema file and include/import it.
+		2) JAXWS Wrapper style (which Apache CXF uses) requires that the operation name matches the local name for the 'wrapper' i.e. getInvoice 
+		   - this is an implementation specific choice rather than any kind of WSDL/Schema standard. If you don't do this it will still work, but 
+		   an info message will be displayed by wsdl2java.</documentation>
+    <xsd:schema targetNamespace="http://soapui.cookbook.samples/schema/invoice" elementFormDefault="qualified" version="2.0" xmlns="http://soapui.cookbook.samples/schema/invoice" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+      <xsd:element name="getInvoice" type="InvoiceRefType"/>
+      <xsd:element name="createInvoice" type="InvoiceDocumentType"/>
+      <xsd:element name="InvoiceDocument" type="InvoiceDocumentType"/>
+      <xsd:element name="Acknowledgement" type="InvoiceRefType"/>
+      <xsd:complexType name="InvoiceRefType">
+        <xsd:sequence>
+          <xsd:element name="invoiceNo" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="InvoiceDocumentType">
+        <xsd:sequence>
+          <xsd:element name="invoiceNo" type="xsd:string"/>
+          <xsd:element name="company" type="xsd:string"/>
+          <xsd:element name="amount" type="xsd:double"/>
+          <xsd:element name="file" type="xsd:base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+  <message name="GetInvoiceRequestMessage">
+    <part name="invoiceRef" element="inv:getInvoice"/>
+  </message>
+  <message name="GetInvoiceResponseMessage">
+    <part name="invoiceDocument" element="inv:InvoiceDocument"/>
+  </message>
+  <message name="CreateInvoiceRequestMessage">
+    <part name="invoiceDoc" element="inv:createInvoice"/>
+  </message>
+  <message name="CreateInvoiceResponseMessage">
+    <part name="acknowledgement" element="inv:Acknowledgement"/>
+  </message>
+  <portType name="InvoicePortType">
+    <documentation>Get and Create An Invoice.</documentation>
+    <operation name="getInvoice">
+      <input name="GetInvoiceInput" message="tns:GetInvoiceRequestMessage"/>
+      <output name="GetInvoiceOutput" message="tns:GetInvoiceResponseMessage"/>
+    </operation>
+    <operation name="createInvoice">
+      <input name="createInvoiceInput" message="tns:CreateInvoiceRequestMessage"/>
+      <output name="createInvoiceOutput" message="tns:CreateInvoiceResponseMessage"/>
+    </operation>
+  </portType>
+  <binding name="InvoicePortBinding" type="tns:InvoicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/getInvoiceRequest/request"/>
+      <input name="GetInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="GetInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="createInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/createInvoiceRequest/request"/>
+      <input name="createInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="createInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="InvoiceServiceV2">
+    <port name="InvoicePort" binding="tns:InvoicePortBinding">
+      <soap:address location="http://localhost:9002/ws/invoice/v2"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://bear-software-macpro.home:8088/mockInvoicePortBinding</con:endpoint><con:endpoint>http://localhost:9002/ws/invoice/v2</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://soapui.cookbook.samples/createInvoiceRequest/request" name="createInvoice" bindingOperationName="createInvoice" type="Request-Response" outputName="createInvoiceOutput" inputName="createInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional" id="092ffeda-15d6-402b-a268-c291e7055693"><con:settings/><con:call name="Create Invoice Request" id="1c98d6c9-1d4f-4ebd-b9ad-5d38114e07fa"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting><con:setting id="WsdlSettings@enable-mtom">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@force_mtom">false</con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9000/mockInvoicePortBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:invoiceNo>1</inv:invoiceNo>
+         <inv:company>Test Company 1</inv:company>
+         <inv:amount>100</inv:amount>
+         <inv:file>cid:invoice1.pdf</inv:file>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:attachment><con:name>invoice1.pdf</con:name><con:contentType>application/pdf</con:contentType><con:contentId>invoice1.pdf</con:contentId><con:part>invoice1.pdf</con:part><con:url>/soapui-cookbook/chapter4/invoice1.pdf</con:url><con:id>2fff22fc-ef98-424b-942a-bfab55308920</con:id></con:attachment><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/createInvoiceRequest/request"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="http://soapui.cookbook.samples/getInvoiceRequest/request" name="getInvoice" bindingOperationName="getInvoice" type="Request-Response" outputName="GetInvoiceOutput" inputName="GetInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional" id="8e9e3833-c35c-4eb2-8af1-ede05c29bf43"><con:settings/><con:call name="Get Invoice Request" id="b47f8a35-6e41-45d1-ba93-6ac90ca0a6b3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting><con:setting id="WsdlSettings@enable-mtom">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@force_mtom">false</con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9000/mockInvoicePortBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getInvoice>
+         <inv:invoiceNo>1</inv:invoiceNo>
+      </inv:getInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/getInvoiceRequest/request"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockInvoicePortBinding" host="bear-software-macpro.home" name="InvoicePortBinding MockService" id="899dfcb3-3896-4a52-b825-3155fc2b6b8c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="createInvoice" interface="InvoicePortBinding" operation="createInvoice" id="e5432566-9a27-4eda-87c6-4415c1d061fd"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response OK" httpResponseStatus="200" encoding="UTF-8" id="2e00c3c2-9e2f-4470-8e0f-6b82b5a48391"><con:settings/><con:script>def attachments = mockRequest.requestAttachments
+
+def attachmentName = attachments[0].name
+log.info "Name: $attachmentName"
+log.info "URL: ${attachments[0].url}"
+log.info "Part: ${attachments[0].part}"
+log.info "Encoding: ${attachments[0].contentEncoding}"
+
+def attachmentInputStream = attachments[0].inputStream
+def file = new File("/temp/$attachmentName")
+file.append(attachmentInputStream)
+</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:Acknowledgement>
+         <inv:invoiceNo>1</inv:invoiceNo>
+      </inv:Acknowledgement>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/createInvoiceRequest/request"/></con:response><con:dispatchConfig/></con:mockOperation><con:mockOperation name="getInvoice" interface="InvoicePortBinding" operation="getInvoice" id="936a715f-6c3b-47cd-be8a-81efdf93eba9"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response Invoice&amp;Attachment" httpResponseStatus="200" encoding="UTF-8" id="bf509249-7c62-4ca8-8bdc-e4ffdbdee88e"><con:settings><con:setting id="WsdlSettings@enable-mtom">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockResponse@force_mtom">true</con:setting></con:settings><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:InvoiceDocument>
+         <inv:invoiceNo>1</inv:invoiceNo>
+         <inv:company>Test Company 1</inv:company>
+         <inv:amount>100</inv:amount>
+         <inv:file><xop:Include href="cid:invoice1.pdf" xmlns:xop="http://www.w3.org/2004/08/xop/include"/></inv:file>
+      </inv:InvoiceDocument>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:attachment><con:name>invoice1.pdf</con:name><con:contentType>application/pdf</con:contentType><con:size>15702</con:size><con:contentId>invoice1.pdf</con:contentId><con:part>&lt;anonymous></con:part><con:url>/soapui-cookbook/chapter4/invoice1.pdf</con:url><con:id>0ba85d68-b7ae-49af-bd74-4e79336f4186</con:id></con:attachment><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/getInvoiceRequest/request"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

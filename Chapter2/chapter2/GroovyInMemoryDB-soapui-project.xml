@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="GroovyInMemoryDB" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" id="cd68248d-d9cf-43b3-bc35-7abd4aae3c70" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite name="TestSuite" id="5aa94829-06aa-4e78-a05a-6188bb41e5f2"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true" id="2e545c11-200d-406d-827c-1b663c3adb38"><con:settings/><con:testStep type="groovy" name="GroovyLoadCSVIntoH2" id="13b4846c-faae-45d3-86d7-828b73906a0f"><con:settings/><con:config><script>import groovy.sql.Sql
+import org.h2.Driver
+
+com.eviware.soapui.support.GroovyUtils.registerJdbcDriver("org.h2.Driver")
+
+def db = Sql.newInstance("jdbc:h2:mem:test", "org.h2.Driver")
+
+//Change this TestCase level property to set the file path
+def fileName = testRunner.testCase.getPropertyValue("invoiceFileName")
+
+db.execute("create table if not exists invoices as select * from csvread('$fileName')")
+ 
+db.eachRow("select * from invoices"){invoice->
+	log.info invoice.toString()
+}
+
+//db.execute("delete from invoices")
+
+//db.execute("drop table invoices")</script></con:config></con:testStep><con:properties><con:property><con:name>invoiceFileName</con:name><con:value>/temp/invoices_with_headers.csv</con:value></con:property></con:properties><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>

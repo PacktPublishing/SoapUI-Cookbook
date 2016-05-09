@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="chapter11" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:recentItemCollection>
+    <con:moduleId>StarterPageModule</con:moduleId>
+    <con:itemId>52667dec-cacd-4467-b2f6-ba99e59f5782</con:itemId>
+  </con:recentItemCollection>
+  <con:recentItemCollection>
+    <con:moduleId>ProjectsModule</con:moduleId>
+    <con:itemId>4f53d932-b22e-4598-baf8-f51ff055efd8</con:itemId>
+    <con:itemId>4901931d-8e9b-4aec-b356-7e5c4786023b</con:itemId>
+  </con:recentItemCollection>
+  <con:recentItemCollection>
+    <con:moduleId>SoapUiNGModule</con:moduleId>
+    <con:itemId>5fea8831-ec5c-4b9e-a2e2-529b2bdfce31</con:itemId>
+  </con:recentItemCollection>
+  <con:navigatorNodeCollection>
+    <con:rootNodeLabel>Projects</con:rootNodeLabel>
+    <con:expandNodeState>
+      <con:id>52667dec-cacd-4467-b2f6-ba99e59f5782</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>4901931d-8e9b-4aec-b356-7e5c4786023b</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>ce38424e-cfdb-4e35-9c0c-8d4b147a07ed</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>ad03be27-1c85-4e1a-965c-7d4038460f21</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+  </con:navigatorNodeCollection>
+  <con:navigatorNodeCollection>
+    <con:rootNodeLabel>SoapUI NG</con:rootNodeLabel>
+    <con:expandNodeState>
+      <con:id>52667dec-cacd-4467-b2f6-ba99e59f5782</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>5fea8831-ec5c-4b9e-a2e2-529b2bdfce31</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+  </con:navigatorNodeCollection>
+  <con:project name="UISupportExamplesProject">/soapui-cookbook/chapter11/UISupportExamples-soapui-project.xml</con:project>
+  <con:project name="RequestFilterListenerPluginProject">/soapui-cookbook/chapter11/RequestFilterListenerPluginProject-soapui-project.xml</con:project>
+  <con:project name="FileCheckPluginProject">/soapui-cookbook/chapter11/FileCheckPluginProject-soapui-project.xml</con:project>
+</con:soapui-workspace>

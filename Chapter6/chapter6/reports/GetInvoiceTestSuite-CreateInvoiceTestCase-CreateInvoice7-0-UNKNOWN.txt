@@ -1,0 +1,49 @@
+Status: UNKNOWN
+Time Taken: 25
+Size: 311
+Timestamp: Wed Oct 29 13:52:48 GMT 2014
+TestStep: CreateInvoice7
+
+----------------- Messages ------------------------------
+
+----------------- Properties ------------------------------
+Encoding: UTF-8
+Endpoint: http://bear-software-macpro.home:8088/mockInvoicePortBinding
+
+---------------- Request ---------------------------
+Request Headers: Host : bear-software-macpro.home:8088
+Content-Length : 396
+SOAPAction : "http://soapui.cookbook.samples/createInvoiceRequest/request"
+Accept-Encoding : gzip,deflate
+User-Agent : Apache-HttpClient/4.1.1 (java 1.5)
+Connection : Keep-Alive
+Content-Type : text/xml;charset=UTF-8
+
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:invoiceNo>7</inv:invoiceNo>
+         <inv:company>Test Company 7</inv:company>
+         <inv:amount>700</inv:amount>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+---------------- Response --------------------------
+Response Headers: #status# : HTTP/1.1 200 OK
+Content-Length : 175
+Content-Encoding : gzip
+Content-Type : text/xml; charset=utf-8
+Server : Jetty(6.1.26)
+
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:Acknowledgement>
+         <inv:invoiceNo>7</inv:invoiceNo>
+      </inv:Acknowledgement>
+   </soapenv:Body>
+</soapenv:Envelope>

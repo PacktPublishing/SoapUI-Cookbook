@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter1" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="InvoiceRESTv1">/soapui-cookbook/chapter1/invoice-rest-v1-soapui-project.xml</con:project>
+  <con:project name="InvoiceSOAPv2">/soapui-cookbook/chapter1/invoice-soap-v2-soapui-project.xml</con:project>
+  <con:project name="InvoiceSOAPv3">/soapui-cookbook/chapter1/Invoice-soap-v3-soapui-project.xml</con:project>
+  <con:project name="Rest Discovery Sample Project">/soapui-cookbook/chapter1/Rest-Discovery-Sample-Project-soapui-project.xml</con:project>
+  <con:project name="InvoiceSOAPv1">/soapui-cookbook/chapter1/invoice-soap-v1-soapui-project.xml</con:project>
+</con:soapui-workspace>

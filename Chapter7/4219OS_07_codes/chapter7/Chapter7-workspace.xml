@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter7" soapui-version="5.1.1" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="SOAPDBMock-Security">/soapui-cookbook/chapter7/SOAPDBMock-Reporting-soapui-project.xml</con:project>
+  <con:project name="RESTSample">/soapui-cookbook/chapter7/RESTDBMock-soapui-project.xml</con:project>
+  <con:project name="WSSecurityUsernameTimestamp">/soapui-cookbook/chapter7/WSSecurityUsernameTimestamp-soapui-project.xml</con:project>
+</con:soapui-workspace>

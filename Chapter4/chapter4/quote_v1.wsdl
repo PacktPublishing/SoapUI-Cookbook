@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="QuoteServiceV1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsp="http://www.w3.org/ns/ws-policy"
+             xmlns:wsam="http://www.w3.org/2007/02/addressing/metadata"
+             xmlns:tns="http://soapui.cookbook.samples/contract/quote"
+	xmlns:qte="http://soapui.cookbook.samples/schema/quote"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://soapui.cookbook.samples/contract/quote">
+	<documentation>
+		Service: QuoteService Async - One way requestQuote - One way receiveQuote Callback
+		Version: 1.0
+		Owner: SoapUI
+		Cookbook
+	</documentation>
+	<types>
+		<documentation>
+		Notes:
+		1) For simplicity I have chosen to define the types locally. Normally I would use a separate schema file and include/import it.
+		2) JAXWS Wrapper style (which Apache CXF uses) requires that the operation name matches the local name for the 'wrapper' i.e. requestQuote
+		   - this is an implementation specific choice rather than any kind of WSDL/Schema standard. If you don't do this it will still work, but 
+		   an info message will be displayed by wsdl2java.
+		</documentation>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://soapui.cookbook.samples/schema/quote"
+			targetNamespace="http://soapui.cookbook.samples/schema/quote"
+			elementFormDefault="qualified" version="1.0">
+			<xsd:element name="requestQuote" type="QuoteRequestType"/>
+			<xsd:element name="receiveQuote" type="QuoteDocumentType"/>
+			<xsd:complexType name="QuoteRequestType">
+					<xsd:sequence>
+						<xsd:element name="productIdsToQuoteFor" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="QuoteDocumentType">
+				<xsd:sequence>
+					<xsd:element name="quoteNo" type="xsd:string"></xsd:element>
+					<xsd:element name="amount" type="xsd:double"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>	
+		</xsd:schema>
+	</types>
+	<message name="RequestQuoteRequestMessage">
+		<part name="quoteRef" element="qte:requestQuote"></part>
+	</message>
+	<message name="ReceiveQuoteRequestMessage">
+		<part name="quoteDocument" element="qte:receiveQuote"></part>
+	</message>
+	<portType name="QuotePortType">
+		<documentation>Request and Receive A Quote.
+		</documentation>
+		<operation name="requestQuote">
+			<input name="RequestQuoteInput" message="tns:RequestQuoteRequestMessage"/>
+		</operation>
+		<operation name="receiveQuote">
+			<input name="ReceiveQuoteInput" message="tns:ReceiveQuoteRequestMessage"/>
+		</operation>
+	</portType>
+	<binding name="QuotePortBinding" type="tns:QuotePortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="requestQuote">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/requestQuoteRequest/request" />
+			<input name="RequestQuoteInput">
+				<soap:body use="literal" />
+			</input>
+		</operation>
+		<operation name="receiveQuote">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/receiveQuoteRequest/request" />
+			<input name="ReceiveQuoteInput">
+				<soap:body use="literal" />
+			</input>
+		</operation>
+	</binding>
+	<service name="QuoteServiceV1">
+		<port name="QuotePort" binding="tns:QuotePortBinding">
+			<soap:address location="http://localhost:9001/ws/quote/v1" />
+            <wsp:Policy>
+                <wsam:Addressing>
+                    <wsp:Policy>
+                        <wsam:NonAnonymousResponses/>
+                    </wsp:Policy>
+                </wsam:Addressing>
+            </wsp:Policy>
+        </port>
+	</service>
+</definitions>

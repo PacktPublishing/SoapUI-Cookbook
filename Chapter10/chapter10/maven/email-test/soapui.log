@@ -1,0 +1,13 @@
+2014-12-10 11:18:44,706 WARN  [SoapUI] Missing folder [/soapui-cookbook/chapter10/maven/email-test/ext] for external libraries
+2014-12-10 11:18:45,115 INFO  [DefaultSoapUICore] initialized soapui-settings from [/Users/bearsoftware/soapui-settings.xml]
+2014-12-10 11:18:45,157 INFO  [HttpClientSupport$Helper] Initializing KeyStore
+2014-12-10 11:18:46,465 INFO  [DefaultSoapUICore] Adding plugin from [/soapui-cookbook/chapter10/maven/email-test/plugins/soapui-emailteststep-plugin-1.0-plugin.jar]
+2014-12-10 11:18:46,492 INFO  [DefaultSoapUICore] Adding factory [class soapui.demo.teststeps.email.EMailTestStepFactory]
+2014-12-10 11:18:46,494 INFO  [DefaultSoapUICore] Adding factory [class soapui.demo.teststeps.email.EMailTestStepPanelBuilderFactory]
+2014-12-10 11:18:48,734 INFO  [WsdlProject] Loaded project from [file:/soapui-cookbook/chapter10/maven/email-test/src/test/resources/EmailTestStepProject-soapui-project.xml]
+2014-12-10 11:18:49,267 INFO  [SoapUITestCaseRunner] Running SoapUI tests in project [EmailTestStepProject]
+2014-12-10 11:18:49,269 INFO  [SoapUITestCaseRunner] Running Project [EmailTestStepProject], runType = SEQUENTIAL
+2014-12-10 11:18:49,287 INFO  [SoapUITestCaseRunner] Running SoapUI testcase [EmailTestCase]
+2014-12-10 11:18:49,288 INFO  [SoapUITestCaseRunner] running step [EmailTestStep]
+2014-12-10 11:18:49,577 INFO  [SoapUITestCaseRunner] Finished running SoapUI testcase [EmailTestCase], time taken: 280ms, status: FINISHED
+2014-12-10 11:18:49,578 INFO  [SoapUITestCaseRunner] Project [EmailTestStepProject] finished with status [FINISHED] in 303ms

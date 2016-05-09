@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="invoice_rest_json_schema" resourceRoot="" soapui-version="5.0.0" id="7aeeaf3a-ec1e-41e8-8bb5-4780a43fb1c4" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8080" type="rest" id="168ee8e6-8a22-4106-8c4d-02b7453b55db" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://bear-software-macpro.home:8080/</con:endpoint><con:endpoint>http://localhost:8080</con:endpoint></con:endpoints><con:resource name="Invoice" path="/invoice/{id}" id="3f4e660a-12c6-4018-9ed6-1c182634c8f5"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value/><con:style>TEMPLATE</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Invoice" method="GET" id="f0e19d67-f3bc-4948-adcb-b81084cb58f5"><con:settings><con:setting id="RecordResponseRepresentations">false</con:setting></con:settings><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/></con:representation><con:request name="Request 1" mediaType="application/json" id="b70cba76-6f59-447b-ad89-4ac247d164dc"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/invoice/12</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="12" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface><con:testSuite name="TestSuite" id="fdb1c780-7419-4cb2-b9f0-85c9bad26e1a"><con:description>TestSuite generated for REST Service [http://localhost:8080]</con:description><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Invoice TestCase" searchProperties="true" id="39b4f7fc-0acd-4db6-9c81-902b66ce13cd"><con:description>TestCase generated for REST Resource [Invoice] located at [/invoice/{id}]</con:description><con:settings/><con:testStep type="restrequest" name="GET invoice" id="84702d10-0925-4761-a931-cdea895c30c3"><con:settings/><con:config service="http://localhost:8080" resourcePath="/invoice/{id}" methodName="Invoice" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GET invoice" mediaType="application/json" id="c430f6ef-e127-47b7-abf7-2d66695583fb"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/invoice/12</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="12" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>id</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Validate JSON Response" id="4c9fea53-434b-4eca-b4c3-80071dd13abc"><con:settings/><con:config><script>import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.fge.jsonschema.core.report.ProcessingReport
+import com.github.fge.jsonschema.main.JsonSchema
+import com.github.fge.jsonschema.main.JsonSchemaFactory
+
+def response = context.expand('${GET invoice#Response}')
+log.info response
+
+ObjectMapper mapper = new ObjectMapper()
+JsonNode invoiceJSON = mapper.readTree(response)
+JsonNode invoiceSchemaJSON = mapper.readTree(new File("/soapui-cookbook/chapter4/invoice_schema.json"))
+
+JsonSchemaFactory factory = JsonSchemaFactory.byDefault()
+JsonSchema invoiceSchema = factory.getJsonSchema(invoiceSchemaJSON)
+if (invoiceSchema.validInstance(invoiceJSON)) log.info("Response Validated!") 
+else {
+	testRunner.fail(invoiceSchema.validate(invoiceJSON).toString())
+}
+
+</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:restMockService port="8080" path="/" host="bear-software-macpro.home" name="REST MockService" id="9ea20761-4550-4f7f-a3cb-85c8b42f2c56"><con:settings/><con:properties/><con:restMockAction name="/invoice/" method="GET" resourcePath="/invoice/" id="44a017d7-b778-4da8-b17c-86b85c10cffe"><con:settings/><con:defaultResponse xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*
+// Examples showing how to match based on path, query param and header
+// Match based on path
+def requestPath = mockRequest.getPath()
+log.info "Path: "+ requestPath
+
+if( requestPath.contains("json") )
+{
+    // return the name of the response you want to dispatch
+    return "JSON Response"
+}
+
+
+// Match based on query parameter
+def queryString = mockRequest.getRequest().getQueryString()
+log.info "QueryString: " + queryString
+
+if( queryString.contains("stockholm") )
+{
+    // return the name of the response you want to dispatch
+    return "Response Stockholm"
+}
+else if( queryString.contains("london") )
+{
+    // return the name of the response you want to dispatch
+    return "Response London"
+}
+
+
+// Match based on header
+def acceptEncodingHeadeList = mockRequest.getRequestHeaders().get("Accept-Encoding")
+log.info "AcceptEncodig Header List: " + acceptEncodingHeadeList
+
+if( acceptEncodingHeadeList.contains("gzip,deflate") )
+{
+    // return the name of the response you want to dispatch
+    return "GZiped Response"
+}
+
+*/
+</con:dispatchPath><con:response name="Response OK" httpResponseStatus="200" mediaType="application/json" id="3fcdf338-39e0-4c5f-af0f-bcf8a99a9848"><con:settings/><con:responseContent>{"invoice": {
+"id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}</con:responseContent></con:response><con:response name="Response Amount Property Missing" httpResponseStatus="200" mediaType="application/json" id="207e8383-992b-4612-a503-dca053e985ef"><con:settings/><con:responseContent>{"invoice": {
+"id": 12345,
+"companyName": "Test Company"
+}}</con:responseContent></con:response></con:restMockAction></con:restMockService><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

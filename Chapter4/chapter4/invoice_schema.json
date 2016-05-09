@@ -1,0 +1,25 @@
+{  
+   "$schema":"http://json-schema.org/draft-03/schema",
+   "required":true,
+   "type":"object",
+   "properties":{  
+      "invoice":{  
+         "required":true,
+         "type":"object",
+         "properties":{  
+            "amount":{  
+               "required":true,
+               "type":"number"
+            },
+            "companyName":{  
+               "required":true,
+               "type":"string"
+            },
+            "id":{  
+               "required":true,
+               "type":"number"
+            }
+         }
+      }
+   }
+}

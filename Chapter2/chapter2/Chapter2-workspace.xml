@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter2" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="Invoice CRUD Project - Data Driven">/soapui-cookbook/chapter2/Invoice-CRUD-Project-soapui-project.xml</con:project>
+  <con:project name="GroovyFiles">/soapui-cookbook/chapter2/GroovyFiles-soapui-project.xml</con:project>
+  <con:project name="GroovyMongoDB">/soapui-cookbook/chapter2/GroovyMongoDB-soapui-project.xml</con:project>
+  <con:project name="GroovyInMemoryDB">/soapui-cookbook/chapter2/GroovyInMemoryDB-soapui-project.xml</con:project>
+  <con:project name="ActiveMQRESTAPI">/soapui-cookbook/chapter2/ActiveMQRESTAPI-soapui-project.xml</con:project>
+  <con:project name="PropertiesProject">/soapui-cookbook/chapter2/PropertiesProject-soapui-project.xml</con:project>
+  <con:project name="JDBCTestStep">/soapui-cookbook/chapter2/JDBCTestStep-soapui-project.xml</con:project>
+</con:soapui-workspace>

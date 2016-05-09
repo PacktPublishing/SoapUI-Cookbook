@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="dbabccaa-efbe-43bf-a346-e2c7fe9ceea1" activeEnvironment="Default" name="AWS-IAM-REST-QUERY" resourceRoot="" soapui-version="5.1.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="2882d54d-3829-498d-a2d6-b5e3eec611df" name="IAMTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="5433ec02-2942-4bdf-a2c1-25d8a6a9696d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="IAMTestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Groovy Script" id="1a57b4f4-8833-443a-8862-5bef2fb29c49"><con:settings/><con:config><script><![CDATA[import java.security.MessageDigest
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import java.net.URLEncoder
+
+//You could easily put these into SoapUI properties
+def method = 'GET'
+def service = 'iam'
+def host = 'iam.amazonaws.com'
+def action = 'ListUsers'
+def version = '2010-05-08'
+def region = 'us-east-1'
+def endpoint = 'https://iam.amazonaws.com'
+def access_key = 'AKIAJLQ5UDKLRHLYLH6A'
+def secret_key = 'm0zr0hvusTcVyMRz/kWgbPnJo5tavOudjYlP/y5c'
+
+//Compute HMAC using key - Taken from http://docs.aws.amazon.com/general/latest/gr/signature-v4-examples.html#signature-v4-common-coding-mistakes
+static byte[] HmacSHA256(String data, byte[] key) throws Exception  {
+	String algorithm="HmacSHA256"
+	Mac mac = Mac.getInstance(algorithm);
+	mac.init(new SecretKeySpec(key, algorithm))
+	return mac.doFinal(data.getBytes("UTF8"))
+}
+//Compute Signature Key - Taken from http://docs.aws.amazon.com/general/latest/gr/signature-v4-examples.html#signature-v4-common-coding-mistakes
+static byte[] getSignatureKey(String key, String dateStamp, String regionName, String serviceName) throws Exception  {
+	byte[] kSecret = ("AWS4" + key).getBytes("UTF8")
+	byte[] kDate    = HmacSHA256(dateStamp, kSecret)
+	byte[] kRegion  = HmacSHA256(regionName, kDate)
+	byte[] kService = HmacSHA256(serviceName, kRegion)
+	byte[] kSigning = HmacSHA256("aws4_request", kService)
+	return kSigning
+}
+//Compute the SHA-256 Hash
+static byte[] hash(String text) {
+		MessageDigest md = MessageDigest.getInstance("SHA-256")
+		md.update(text.getBytes("UTF8"))
+		return md.digest()
+}
+//Taken from Java AWS SDK - Convert byte arrary to Hex string
+static String toHex(byte[] data) {
+	StringBuilder sb = new StringBuilder(data.length * 2)
+	for (int i = 0; i < data.length; i++) {
+		String hex = Integer.toHexString(data[i])
+		if (hex.length() == 1) {
+			// Append leading zero.
+			sb.append("0")
+		} else if (hex.length() == 8) {
+			// Remove ff prefix from negative numbers.
+			hex = hex.substring(6)
+		}
+		sb.append(hex)
+	}
+	return sb.toString().toLowerCase(Locale.getDefault())
+}
+
+//Create a date for headers and the credential string
+TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
+def now = new Date()
+def amz_date = now.format("yyyyMMdd'T'HHmmss'Z'")
+def datestamp = now.format("yyyyMMdd")
+
+// ************* TASK 1: CREATE A CANONICAL REQUEST *************
+// http://docs.aws.amazon.com/general/latest/gr/sigv4-create-canonical-request.html
+
+// Because almost all information is being passed in the query string,
+// the order of these steps is slightly different than examples that
+// use an authorization header.
+
+// Step 1: Define the verb (GET, POST, etc.)--already done.
+
+// Step 2: Create canonical URI--the part of the URI from domain to query
+// string (use '/' if no path)
+def canonical_uri = '/'
+
+// Step 3: Create the canonical headers and signed headers. Header names
+// and value must be trimmed and lowercase, and sorted in ASCII order.
+// Note trailing \n in canonical_headers.
+// signed_headers is the list of headers that are being included
+// as part of the signing process. For requests that use query strings,
+// only "host" is included in the signed headers.
+def canonical_headers = 'host:' + host + '\n'
+def signed_headers = 'host'
+
+// Match the algorithm to the hashing algorithm you use, either SHA-1 or
+// SHA-256 (recommended)
+def algorithm = 'AWS4-HMAC-SHA256'
+def credential_scope = datestamp + '/' + region + '/' + service + '/' + 'aws4_request'
+
+// Step 4: Create the canonical query string. In this example, request
+// parameters are in the query string. Query string values must
+// be URL-encoded (space=%20). The parameters must be sorted by name.
+def canonical_querystring = 'Action='+action+'&Version='+version
+canonical_querystring += '&X-Amz-Algorithm=AWS4-HMAC-SHA256'
+canonical_querystring += '&X-Amz-Credential=' + URLEncoder.encode(access_key + '/' + credential_scope, "UTF-8")
+canonical_querystring += '&X-Amz-Date=' + amz_date
+canonical_querystring += '&X-Amz-Expires=30'
+canonical_querystring += '&X-Amz-SignedHeaders=' + signed_headers
+
+log.info "Canonical Querystring: "+canonical_querystring
+
+// Step 5: Create payload hash. For GET requests, the payload is an
+// empty string ("").
+def payload_hash = toHex(hash(''))
+log.info "Payload Hash="+payload_hash
+
+// Step 6: Combine elements to create create canonical request
+def canonical_request = method + '\n' + canonical_uri + '\n' + canonical_querystring + '\n' + canonical_headers + '\n' + signed_headers + '\n' + payload_hash
+
+// ************* TASK 2: CREATE THE STRING TO SIGN*************
+def string_to_sign = algorithm + '\n' +  amz_date + '\n' +  credential_scope + '\n' +  toHex(hash(canonical_request))
+log.info "String To Sign: "+string_to_sign
+
+// ************* TASK 3: CALCULATE THE SIGNATURE *************
+// Create the signing key
+def signing_key = getSignatureKey(secret_key, datestamp, region, service)
+log.info "Signing Key: "+signing_key
+// Sign the string_to_sign using the signing_key
+def signature = toHex(HmacSHA256(string_to_sign, signing_key))
+log.info "Signature: "+signature
+
+// ************* TASK 4: ADD SIGNING INFORMATION TO THE REQUEST *************
+// The auth information can be either in a query string
+// value or in a header named Authorization. This code shows how to put
+// everything into a query string.
+canonical_querystring += '&X-Amz-Signature=' + signature
+def request_url = endpoint + "?" + canonical_querystring
+
+//Use CURL for testing:
+log.info "curl -GET '"+request_url+"'"
+
+//Add dynamic parameter values to the context
+context["credential"]=access_key + '/' + credential_scope
+context["timestamp"]=amz_date
+context["signature"]=signature
+]]></script></con:config></con:testStep><con:testStep type="httprequest" name="IAMListUsers" id="57691826-6c83-4f76-bd83-6ffff41043e2"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="1e3f55f2-bbab-4b39-8536-2bcbcc1e488f" name="IAMListUsers" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://iam.amazonaws.com</con:endpoint><con:request/><con:assertion type="Valid HTTP Status Codes" id="00feaebc-12e2-473c-9eb8-33e828a363ff" name="ShouldBeStatus200"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:assertion type="XPath Match" id="f78c3a2c-3e17-446d-9400-59cc10603252" name="ShouldContainExpectedTestUser"><con:configuration><path>declare namespace ns1='https://iam.amazonaws.com/doc/2010-05-08/';
+//ns1:ListUsersResponse[1]/ns1:ListUsersResult[1]/ns1:Users[1]/ns1:member[1]/ns1:UserName[1]</path><content>testaws</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><con:parameter><con:name>Action</con:name><con:value>ListUsers</con:value><con:style>QUERY</con:style><con:default>ListUsers</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>Version</con:name><con:value>2010-05-08</con:value><con:style>QUERY</con:style><con:default>2010-05-08</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>X-Amz-Algorithm</con:name><con:value>AWS4-HMAC-SHA256</con:value><con:style>QUERY</con:style><con:default>AWS4-HMAC-SHA256</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>X-Amz-Credential</con:name><con:value>${credential}</con:value><con:style>QUERY</con:style><con:default>AKIAJLQ5UDKLRHLYLH6A/20141121/us-east-1/iam/aws4_request</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>X-Amz-Date</con:name><con:value>${timestamp}</con:value><con:style>QUERY</con:style><con:default>20141121T094947Z</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>X-Amz-Expires</con:name><con:value>30</con:value><con:style>QUERY</con:style><con:default>30</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>X-Amz-SignedHeaders</con:name><con:value>host</con:value><con:style>QUERY</con:style><con:default>host</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>X-Amz-Signature</con:name><con:value>${signature}</con:value><con:style>QUERY</con:style><con:default>944cc3c2ab3f146966c01479d47a5b478fe0c09e7a92df5e73293ff07a6b8663</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

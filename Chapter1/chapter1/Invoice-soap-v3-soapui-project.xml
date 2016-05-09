@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="InvoiceSOAPv3" resourceRoot="" soapui-version="5.0.0" id="d875595d-21f8-4f5d-850e-b60f1b77116a" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="InvoicePortBinding" type="wsdl" bindingName="{http://soapui.cookbook.samples/contract/invoice}InvoicePortBinding" soapVersion="1_1" anonymous="optional" definition="file:/soapui-cookbook/chapter1/soap/invoicev3/wsdl/Invoice_v3.wsdl" id="da122d63-ea03-4614-8f97-ef3772ca3bbd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/soapui-cookbook/chapter1/soap/invoicev3/wsdl/Invoice_v3.wsdl"><con:part><con:url>file:/soapui-cookbook/chapter1/soap/invoicev3/wsdl/Invoice_v3.wsdl</con:url><con:content><![CDATA[<definitions name="InvoiceServiceV3" targetNamespace="http://soapui.cookbook.samples/contract/invoice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soapui.cookbook.samples/contract/invoice" xmlns:inv="http://soapui.cookbook.samples/schema/invoice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <documentation>Service: InvoiceService
+		Version: 3.0
+		Owner: SoapUI
+		Cookbook</documentation>
+  <types>
+    <documentation>Notes:
+		1) For simplicity I have chosen to define the types locally. Normally I would use a separate schema file and include/import it.
+		2) JAXWS Wrapper style (which Apache CXF uses) requires that the operation name matches the local name for the 'wrapper' i.e. retrieveInvoice 
+		   - this is an implementation specific choice rather than any kind of WSDL/Schema standard. If you don't do this it will still work, but 
+		   an info message will be displayed by wsdl2java.</documentation>
+    <xsd:schema targetNamespace="http://soapui.cookbook.samples/schema/invoice" elementFormDefault="qualified" version="3.0" xmlns="http://soapui.cookbook.samples/schema/invoice">
+      <xsd:element name="retrieveInvoice" type="InvoiceRefType"/>
+      <xsd:element name="createInvoice" type="InvoiceDocumentType"/>
+      <xsd:element name="updateInvoice" type="InvoiceDocumentType"/>
+      <xsd:element name="deleteInvoice" type="InvoiceRefType"/>
+      <xsd:element name="InvoiceDocument" type="InvoiceDocumentType"/>
+      <xsd:element name="Acknowledgement" type="InvoiceRefType"/>
+      <xsd:complexType name="InvoiceRefType">
+        <xsd:sequence>
+          <xsd:element name="invoiceNo" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="InvoiceDocumentType">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:string"/>
+          <xsd:element name="customerRef" type="xsd:string"/>
+          <xsd:element name="amount" type="xsd:double"/>
+          <xsd:element name="dueDate" type="xsd:date"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+  <message name="RetrieveInvoiceRequestMessage">
+    <part name="invoiceRef" element="inv:retrieveInvoice"/>
+  </message>
+  <message name="RetrieveInvoiceResponseMessage">
+    <part name="invoiceDocument" element="inv:InvoiceDocument"/>
+  </message>
+  <message name="CreateInvoiceRequestMessage">
+    <part name="invoiceDoc" element="inv:createInvoice"/>
+  </message>
+  <message name="CreateInvoiceResponseMessage">
+    <part name="acknowledgement" element="inv:Acknowledgement"/>
+  </message>
+  <message name="UpdateInvoiceRequestMessage">
+    <part name="invoiceDoc" element="inv:updateInvoice"/>
+  </message>
+  <message name="UpdateInvoiceResponseMessage">
+    <part name="acknowledgement" element="inv:Acknowledgement"/>
+  </message>
+  <message name="DeleteInvoiceRequestMessage">
+    <part name="invoiceRef" element="inv:deleteInvoice"/>
+  </message>
+  <portType name="InvoicePortType">
+    <documentation>Retrieve and Create An Invoice.</documentation>
+    <operation name="retrieveInvoice">
+      <input name="RetrieveInvoiceInput" message="tns:RetrieveInvoiceRequestMessage"/>
+      <output name="RetrieveInvoiceOutput" message="tns:RetrieveInvoiceResponseMessage"/>
+    </operation>
+    <operation name="createInvoice">
+      <input name="CreateInvoiceInput" message="tns:CreateInvoiceRequestMessage"/>
+      <output name="CreateInvoiceOutput" message="tns:CreateInvoiceResponseMessage"/>
+    </operation>
+    <operation name="updateInvoice">
+      <input name="UpdateInvoiceInput" message="tns:UpdateInvoiceRequestMessage"/>
+      <output name="UpdateInvoiceOutput" message="tns:UpdateInvoiceResponseMessage"/>
+    </operation>
+    <operation name="deleteInvoice">
+      <input name="DeleteInvoiceInput" message="tns:DeleteInvoiceRequestMessage"/>
+    </operation>
+  </portType>
+  <binding name="InvoicePortBinding" type="tns:InvoicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="retrieveInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/retrieveInvoiceRequest/request"/>
+      <input name="RetrieveInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="RetrieveInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="createInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/createInvoiceRequest/request"/>
+      <input name="CreateInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="CreateInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="updateInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/updateInvoiceRequest/request"/>
+      <input name="UpdateInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+      <output name="UpdateInvoiceOutput">
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="deleteInvoice">
+      <soap:operation soapAction="http://soapui.cookbook.samples/deleteInvoiceRequest/request"/>
+      <input name="DeleteInvoiceInput">
+        <soap:body use="literal"/>
+      </input>
+    </operation>
+  </binding>
+  <service name="InvoiceServiceV3">
+    <port name="InvoicePort" binding="tns:InvoicePortBinding">
+      <soap:address location="http://localhost:9003/ws/invoice/v3"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:9002/ws/invoice/v2</con:endpoint><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://soapui.cookbook.samples/retrieveInvoiceRequest/request" name="retrieveInvoice" bindingOperationName="retrieveInvoice" type="Request-Response" outputName="RetrieveInvoiceOutput" inputName="RetrieveInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional" id="02ba168b-a577-4b50-8eb3-f7e06fdcb50b"><con:settings/><con:call name="Request 1" id="b2049feb-3332-4202-82d2-7dd06115aafe"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:retrieveInvoice>
+         <inv:invoiceNo>?</inv:invoiceNo>
+      </inv:retrieveInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/getInvoiceRequest/request"/></con:call></con:operation><con:operation isOneWay="false" action="http://soapui.cookbook.samples/createInvoiceRequest/request" name="createInvoice" bindingOperationName="createInvoice" type="Request-Response" outputName="CreateInvoiceOutput" inputName="CreateInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional" id="05c1df59-7aaa-46be-8417-7e30e206d8f1"><con:settings/><con:call name="Request 1" id="7528a01f-d030-4234-a96b-8d7afeb2e1c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>?</inv:id>
+         <inv:customerRef/><inv:amount>?</inv:amount><inv:dueDate/>
+         <inv:company>?</inv:company>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/createInvoiceRequest/request"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="319cea43-9fd1-41af-9bed-5a68e5df32e7" isOneWay="false" action="http://soapui.cookbook.samples/updateInvoiceRequest/request" name="updateInvoice" bindingOperationName="updateInvoice" type="Request-Response" outputName="UpdateInvoiceOutput" inputName="UpdateInvoiceInput" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="083b5f37-ba2a-483e-a63d-573bfdfd5304" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:updateInvoice>
+         <inv:id>?</inv:id>
+         <inv:customerRef>?</inv:customerRef>
+         <inv:amount>?</inv:amount>
+         <inv:dueDate>?</inv:dueDate>
+      </inv:updateInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/updateInvoiceRequest/request"/></con:call></con:operation><con:operation id="feab87f3-90a1-412f-a725-6627128fff2b" isOneWay="false" action="http://soapui.cookbook.samples/deleteInvoiceRequest/request" name="deleteInvoice" bindingOperationName="deleteInvoice" type="One-Way" inputName="DeleteInvoiceInput" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="43f14dfd-a46f-4372-af49-4dc426a313fd" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:deleteInvoice>
+         <inv:invoiceNo>?</inv:invoiceNo>
+      </inv:deleteInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/deleteInvoiceRequest/request"/></con:call></con:operation></con:interface><con:testSuite name="InvoicePortBinding TestSuite" id="5dab22db-503c-4558-ac3c-c6b166330af3"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase - Create Invoice" searchProperties="true" id="cebc6c19-f7dd-4d6a-add2-cbfa6e30e522"><con:settings/><con:testStep type="request" name="createInvoice" id="f4863f05-03d9-4d0c-b4b3-351ecb8e7875"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>InvoicePortBinding</con:interface><con:operation>createInvoice</con:operation><con:request name="createInvoice" id="6048cba4-3edb-4ecb-9bfb-3dd9b2ed1bf2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>12345</inv:id>
+         <inv:customerRef/><inv:amount>100.0</inv:amount><inv:dueDate/>
+         <inv:company>Test Company</inv:company>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3159d375-9a76-42a1-b62f-c1ecbf96bab8"/><con:assertion type="XPath Match" id="b5fc4bc2-625f-4b58-be47-19ee92130abe" name="AcknowledgementShouldContainInvoiceNo12345"><con:configuration><path>declare namespace ns1='http://soapui.cookbook.samples/schema/invoice';
+//ns1:Acknowledgement[1]/ns1:invoiceNo[1]</path><content>12345</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase - Get Invoice" searchProperties="true" id="907b15b9-3f29-4048-b419-b67840b17e77"><con:settings/><con:testStep type="request" name="getInvoice" id="2a02ba57-6aec-4be0-8454-8127d4db5f97"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>InvoicePortBinding</con:interface><con:operation>retrieveInvoice</con:operation><con:request name="getInvoice" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="9fdf5379-9f9d-4271-b1a0-45db917e6c2a"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:9003/ws/invoice/v3</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:retrieveInvoice>
+         <inv:invoiceNo>12345</inv:invoiceNo>
+      </inv:retrieveInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="XPath Match" name="InvoiceNoShouldBe12345" id="1cdaf1ac-6494-40cc-9176-069d728190d4"><con:configuration><path>declare namespace ns1='http://soapui.cookbook.samples/schema/invoice';
+//ns1:InvoiceDocument[1]/ns1:id[1]</path><content>12345</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="6d24de88-accc-4967-9ab7-ab898f7c5da3" name="Invoice12345ShouldHaveAmountOf100.0"><con:configuration><path>declare namespace ns1='http://soapui.cookbook.samples/schema/invoice';
+//ns1:InvoiceDocument[1]/ns1:amount[1]</path><content>100.0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soapui.cookbook.samples/getInvoiceRequest/request"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

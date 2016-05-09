@@ -1,0 +1,49 @@
+Status: OK
+Time Taken: 30
+Size: 393
+Timestamp: Wed Oct 29 13:52:48 GMT 2014
+TestStep: getInvoice3
+
+----------------- Messages ------------------------------
+
+----------------- Properties ------------------------------
+Encoding: UTF-8
+Endpoint: http://localhost:8088/mockInvoicePortBinding
+
+---------------- Request ---------------------------
+Request Headers: Host : localhost:8088
+Content-Length : 301
+SOAPAction : "http://soapui.cookbook.samples/getInvoiceRequest/request"
+Accept-Encoding : gzip,deflate
+User-Agent : Apache-HttpClient/4.1.1 (java 1.5)
+Connection : Keep-Alive
+Content-Type : text/xml;charset=UTF-8
+
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:getInvoice>
+         <inv:invoiceNo>3</inv:invoiceNo>
+      </inv:getInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+---------------- Response --------------------------
+Response Headers: #status# : HTTP/1.1 200 OK
+Content-Length : 201
+Content-Encoding : gzip
+Content-Type : text/xml; charset=utf-8
+Server : Jetty(6.1.26)
+
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:InvoiceDocument>
+         <inv:invoiceNo>3</inv:invoiceNo>
+         <inv:company>comp3</inv:company>
+         <inv:amount>300.0</inv:amount>
+      </inv:InvoiceDocument>
+   </soapenv:Body>
+</soapenv:Envelope>

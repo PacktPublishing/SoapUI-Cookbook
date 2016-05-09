@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter9" soapui-version="5.1.1" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="InvoiceV3LoadTest">/soapui-cookbook/chapter9/InvoiceV3LoadTest-soapui-project.xml</con:project>
+</con:soapui-workspace>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter6" soapui-version="5.1.1" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="SOAPDBMock-Reporting">/soapui-cookbook/chapter6/SOAPDBMock-Reporting-soapui-project.xml</con:project>
+  <con:project name="SOAPDBMock-Coverage">/soapui-cookbook/chapter6/SOAPDBMock-Coverage-soapui-project.xml</con:project>
+</con:soapui-workspace>

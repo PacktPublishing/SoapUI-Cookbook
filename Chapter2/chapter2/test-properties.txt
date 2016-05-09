@@ -1,0 +1,4 @@
+environmentName=Dev Test
+invoiceEndpoint=http://localhost:9000
+userName=test
+password=password

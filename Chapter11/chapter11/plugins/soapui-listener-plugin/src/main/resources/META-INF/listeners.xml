@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:soapui-listeners xmlns:tns="http://eviware.com/soapui/config">
+    <tns:listener id="RequestFilterListener" listenerClass="sample.listeners.RequestFilterListener"
+    listenerInterface="com.eviware.soapui.impl.wsdl.submit.RequestFilter" />
+</tns:soapui-listeners>

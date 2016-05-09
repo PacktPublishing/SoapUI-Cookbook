@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="InvoiceServiceV3" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://soapui.cookbook.samples/contract/invoice" 
+	xmlns:inv="http://soapui.cookbook.samples/schema/invoice"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://soapui.cookbook.samples/contract/invoice">
+	<documentation>
+		Service: InvoiceService
+		Version: 3.0
+		Owner: SoapUI
+		Cookbook
+	</documentation>
+	<types>
+		<documentation>
+		Notes:
+		1) For simplicity I have chosen to define the types locally. Normally I would use a separate schema file and include/import it.
+		2) JAXWS Wrapper style (which Apache CXF uses) requires that the operation name matches the local name for the 'wrapper' i.e. retrieveInvoice 
+		   - this is an implementation specific choice rather than any kind of WSDL/Schema standard. If you don't do this it will still work, but 
+		   an info message will be displayed by wsdl2java.
+		</documentation>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://soapui.cookbook.samples/schema/invoice"
+			targetNamespace="http://soapui.cookbook.samples/schema/invoice"
+			elementFormDefault="qualified" version="3.0">
+			<xsd:element name="retrieveInvoice" type="InvoiceRefType"/>
+			<xsd:element name="createInvoice" type="InvoiceDocumentType"/>
+			<xsd:element name="updateInvoice" type="InvoiceDocumentType"/>
+			<xsd:element name="deleteInvoice" type="InvoiceRefType"/>
+			<xsd:element name="InvoiceDocument" type="InvoiceDocumentType"/>
+			<xsd:element name="Acknowledgement" type="InvoiceRefType"/>
+			<xsd:complexType name="InvoiceRefType">
+					<xsd:sequence>
+						<xsd:element name="invoiceNo" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="InvoiceDocumentType">
+				<xsd:sequence>
+					<xsd:element name="id" type="xsd:string"></xsd:element>
+					<xsd:element name="customerRef" type="xsd:string"></xsd:element>
+					<xsd:element name="amount" type="xsd:double"></xsd:element>
+					<xsd:element name="dueDate" type="xsd:date"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>	
+		</xsd:schema>
+	</types>
+	<message name="RetrieveInvoiceRequestMessage">
+		<part name="invoiceRef" element="inv:retrieveInvoice"></part>
+	</message>
+	<message name="RetrieveInvoiceResponseMessage">
+		<part name="invoiceDocument" element="inv:InvoiceDocument"></part>
+	</message>
+	<message name="CreateInvoiceRequestMessage">
+		<part name="invoiceDoc" element="inv:createInvoice"></part>
+	</message>
+	<message name="CreateInvoiceResponseMessage">
+		<part name="acknowledgement" element="inv:Acknowledgement"></part>
+	</message>
+		<message name="UpdateInvoiceRequestMessage">
+		<part name="invoiceDoc" element="inv:updateInvoice"></part>
+	</message>
+	<message name="UpdateInvoiceResponseMessage">
+		<part name="acknowledgement" element="inv:Acknowledgement"></part>
+	</message>
+	<message name="DeleteInvoiceRequestMessage">
+		<part name="invoiceRef" element="inv:deleteInvoice"></part>
+	</message>
+	<portType name="InvoicePortType">
+		<documentation>Retrieve and Create An Invoice.
+		</documentation>
+		<operation name="retrieveInvoice">
+			<input name="RetrieveInvoiceInput" message="tns:RetrieveInvoiceRequestMessage"/>
+			<output name="RetrieveInvoiceOutput" message="tns:RetrieveInvoiceResponseMessage"/>
+		</operation>
+		<operation name="createInvoice">
+			<input name="CreateInvoiceInput" message="tns:CreateInvoiceRequestMessage"/>
+			<output name="CreateInvoiceOutput" message="tns:CreateInvoiceResponseMessage"/>
+		</operation>
+		<operation name="updateInvoice">
+			<input name="UpdateInvoiceInput" message="tns:UpdateInvoiceRequestMessage"/>
+			<output name="UpdateInvoiceOutput" message="tns:UpdateInvoiceResponseMessage"/>
+		</operation>
+		<operation name="deleteInvoice">
+			<input name="DeleteInvoiceInput" message="tns:DeleteInvoiceRequestMessage"/>
+		</operation>
+	</portType>
+	<binding name="InvoicePortBinding" type="tns:InvoicePortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="retrieveInvoice">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/retrieveInvoiceRequest/request" />
+			<input name="RetrieveInvoiceInput">
+				<soap:body use="literal" />
+			</input>
+			<output name="RetrieveInvoiceOutput">
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		<operation name="createInvoice">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/createInvoiceRequest/request" />
+			<input name="CreateInvoiceInput">
+				<soap:body use="literal" />
+			</input>
+			<output name="CreateInvoiceOutput">
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		<operation name="updateInvoice">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/updateInvoiceRequest/request" />
+			<input name="UpdateInvoiceInput">
+				<soap:body use="literal" />
+			</input>
+			<output name="UpdateInvoiceOutput">
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		<operation name="deleteInvoice">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/deleteInvoiceRequest/request" />
+			<input name="DeleteInvoiceInput">
+				<soap:body use="literal" />
+			</input>
+		</operation>
+	</binding>
+	<service name="InvoiceServiceV3">
+		<port name="InvoicePort" binding="tns:InvoicePortBinding">
+			<soap:address location="http://localhost:9003/ws/invoice/v3" />
+		</port>
+	</service>
+</definitions>

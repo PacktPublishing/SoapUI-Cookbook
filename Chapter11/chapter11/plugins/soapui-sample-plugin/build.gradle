@@ -1,0 +1,28 @@
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+
+version = '1.0'
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.2'
+}
+
+jar {
+	classifier = 'plugin'
+    manifest {
+        attributes 'Implementation-Title': 'SoapUI Plugin Template', 'Implementation-Version': version
+    }
+}
+
+repositories {
+	mavenCentral()
+	maven { url "http://www.soapui.org/repository/maven2" }
+}
+
+dependencies {
+	compile(group: 'com.smartbear.soapui', name: 'soapui', version:'5.1.2-m-SNAPSHOT') {
+		exclude(module: 'jms')
+		exclude(module: 'jtidy' )
+		exclude(module: 'cajo' )
+	}
+}

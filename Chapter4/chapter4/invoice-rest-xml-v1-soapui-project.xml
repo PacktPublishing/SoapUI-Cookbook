@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="invoice_rest_xml_v1" resourceRoot="" soapui-version="5.0.0" id="f264ec83-c855-4594-b515-a38d2600d6e5" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="invoice_xml_v1" type="rest" basePath="" definitionUrl="file:/soapui-cookbook/chapter4/invoice_xml_v1.wadl" id="0833b5df-e83f-4883-94e9-173c50b29ae8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://bear-software-macpro.home:8080/</con:endpoint><con:endpoint>http://localhost:8080</con:endpoint></con:endpoints><con:resource name="/invoiceservice/v1/" path="/invoiceservice/v1/" id="bca19c5d-98ae-4152-a628-aab83ef8d65e"><con:settings/><con:parameters/><con:resource name="invoice/{id}" path="invoice/{id}" id="19e978be-5f79-45fb-9f96-fbb5e9636a71"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value xsi:nil="true"/><con:style>TEMPLATE</con:style><con:default xsi:nil="true"/></con:parameter></con:parameters><con:method name="GET" method="GET" id="55fef134-1189-4f2c-91a2-008db59d684f"><con:settings><con:setting id="RecordResponseRepresentations">true</con:setting></con:settings><con:parameters/><con:representation type="RESPONSE" id=""><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:v1="http://v1.invoice.rest">v1:invoice</con:element><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" id="3386a601-19bd-46eb-9dbc-a3a11cab80cc"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/invoiceservice/v1/invoice/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:resource></con:interface><con:testSuite name="TestSuite" id="a124e39d-fc84-4267-a6b7-432afd749e52"><con:description>TestSuite generated for REST Service [invoice_xml_v1]</con:description><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="invoice/{id} TestCase" searchProperties="true" id="e91f3242-3d84-4658-a41e-59128dabcfcc"><con:description>TestCase generated for REST Resource [invoice/{id}] located at [/invoiceservice/v1/invoice/{id}]</con:description><con:settings/><con:testStep type="restrequest" name="GET invoice" id="dd3da1a7-5d54-4330-866a-d7ed35ed8d7f"><con:settings/><con:config service="invoice_xml_v1" resourcePath="/invoiceservice/v1/invoice/{id}" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="GET invoice" mediaType="application/json" id="d55eab62-fbcc-48e7-b70a-d212f0823aa4"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting><con:setting id="RecordRequestRepresentations">false</con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/invoiceservice/v1/invoice/</con:originalUri><con:assertion type="Schema Compliance" name="Schema Compliance" id="9370957e-da62-433d-855a-bdc681bdbd3b"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:restMockService port="8080" path="/" host="bear-software-macpro.home" name="REST MockService" id="a8e5987a-5d0a-485f-8966-fd47d24db084"><con:settings/><con:properties/><con:restMockAction name="/invoiceservice/v1/invoice/" method="GET" resourcePath="/invoiceservice/v1/invoice/" id="75d9c8a0-9326-4e73-bfe0-220559983c88"><con:settings/><con:defaultResponse xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*
+// Examples showing how to match based on path, query param and header
+// Match based on path
+def requestPath = mockRequest.getPath()
+log.info "Path: "+ requestPath
+
+if( requestPath.contains("json") )
+{
+    // return the name of the response you want to dispatch
+    return "JSON Response"
+}
+
+
+// Match based on query parameter
+def queryString = mockRequest.getRequest().getQueryString()
+log.info "QueryString: " + queryString
+
+if( queryString.contains("stockholm") )
+{
+    // return the name of the response you want to dispatch
+    return "Response Stockholm"
+}
+else if( queryString.contains("london") )
+{
+    // return the name of the response you want to dispatch
+    return "Response London"
+}
+
+
+// Match based on header
+def acceptEncodingHeadeList = mockRequest.getRequestHeaders().get("Accept-Encoding")
+log.info "AcceptEncodig Header List: " + acceptEncodingHeadeList
+
+if( acceptEncodingHeadeList.contains("gzip,deflate") )
+{
+    // return the name of the response you want to dispatch
+    return "GZiped Response"
+}
+
+*/
+</con:dispatchPath><con:response name="Response OK" httpResponseStatus="200" id="4831bd5b-b601-4527-a5d8-f8da43a0b29b"><con:settings/><con:responseContent><![CDATA[<i:invoice xmlns:i="http://v1.invoice.rest">
+    <id>12345</id>
+    <companyName>Test Compainy</companyName>
+    <amount>100</amount>
+</i:invoice>]]></con:responseContent></con:response><con:response name="Response Missing Amount Element" httpResponseStatus="200" id="4618266c-a55e-4939-844b-fc76d63b73d9"><con:settings/><con:responseContent><![CDATA[<i:invoice xmlns:i="http://v1.invoice.rest">
+    <id>12345</id>
+    <companyName>Test Compainy</companyName>
+</i:invoice>]]></con:responseContent></con:response><con:response name="Response Wrong Element Order" httpResponseStatus="200" id="7d52519d-e992-42c1-8410-056aeb2f9774"><con:settings/><con:responseContent><![CDATA[<i:invoice xmlns:i="http://v1.invoice.rest">
+    <amount>100</amount>
+    <companyName>Test Compainy</companyName>
+     <id>12345</id>
+</i:invoice>]]></con:responseContent></con:response><con:response name="Response Wrong Type, But Passes!" httpResponseStatus="200" id="7ff39c27-8197-4ecc-a328-699cb3339ff9"><con:settings/><con:responseContent><![CDATA[<i:order xmlns:i="http://v1.invoice.rest">
+    <id>12345</id>
+    <companyName>Test Compainy</companyName>
+    <amount>100</amount>
+</i:order>]]></con:responseContent></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

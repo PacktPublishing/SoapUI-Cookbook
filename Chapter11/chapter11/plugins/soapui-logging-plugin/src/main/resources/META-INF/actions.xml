@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:soapui-actions xmlns:tns="http://eviware.com/soapui/config">
+
+<tns:action id="LoggingAction" actionClass="sample.actions.LoggingProjectAction"/>
+
+<tns:actionGroup id="EnabledWsdlProjectActions">
+	<tns:actionMapping actionId="LoggingAction"/>
+</tns:actionGroup>
+</tns:soapui-actions>

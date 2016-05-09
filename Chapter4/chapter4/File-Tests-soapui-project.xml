@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="62649ebf-568d-4a45-a2ff-0b113af898e4" activeEnvironment="Default" name="File Tests" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="4990ae4e-6575-4350-b1b8-4ee8a1447971" name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="c6f0ae7f-207c-4198-a9ef-cab722c58f00" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="TestFileExists" id="f1c3985f-399b-4dcf-83ae-512c12a56754"><con:settings/><con:config><script>def fileName = "/temp/sample.ldif"
+def testFile = new File(fileName)
+if (!testFile.exists()) testRunner.fail("File $fileName does not exist.")
+	else log.info "File $fileName exists."</script></con:config></con:testStep><con:testStep type="groovy" name="SearchFileContents" id="97c20713-3bf0-4081-b0e2-76246784528c"><con:settings/><con:config><script>def fileName = "/temp/catalina.2013-08-23.log"
+def searchString = "6d8b"
+
+def testFile = new File(fileName)
+def found = false
+testFile.eachLine{line ->
+	if (line.contains(searchString)) {
+		log.info "Found in line: $line"
+		found = true
+	}
+}
+if (!found) 
+	testRunner.fail("The search string ($searchString) was not found in file ($testFile).")</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

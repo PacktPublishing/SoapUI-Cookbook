@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e7ae50ad-07f8-4d58-b897-fffc5ace000f" activeEnvironment="Default" name="WSSecurityUsernameTimestamp" resourceRoot="" soapui-version="5.1.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="6da3b1df-d0c4-44f7-80da-e9f7d4c30bc6" wsaVersion="NONE" name="Greeter_SOAPBinding" type="wsdl" bindingName="{http://apache.org/hello_world_soap_http}Greeter_SOAPBinding" soapVersion="1_1" anonymous="optional" definition="file:/work/soapui-cookbook/chapter1/apache-cxf-3.0.1/samples/ws_security/ut_policy/src/main/config/hello_world.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/work/soapui-cookbook/chapter1/apache-cxf-3.0.1/samples/ws_security/ut_policy/src/main/config/hello_world.wsdl"><con:part><con:url>file:/work/soapui-cookbook/chapter1/apache-cxf-3.0.1/samples/ws_security/ut_policy/src/main/config/hello_world.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements. See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership. The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+ 
+  http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations
+  under the License.-->
+<wsdl:definitions name="HelloWorld" targetNamespace="http://apache.org/hello_world_soap_http" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://apache.org/hello_world_soap_http" xmlns:x1="http://apache.org/hello_world_soap_http/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <schema targetNamespace="http://apache.org/hello_world_soap_http/types" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://apache.org/hello_world_soap_http/types">
+      <simpleType name="MyStringType">
+        <restriction base="string">
+          <maxLength value="30"/>
+        </restriction>
+      </simpleType>
+      <element name="greetMe">
+        <complexType>
+          <sequence>
+            <element name="requestType" type="tns:MyStringType"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="greetMeResponse">
+        <complexType>
+          <sequence>
+            <element name="responseType" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="greetMeRequest">
+    <wsdl:part element="x1:greetMe" name="in"/>
+  </wsdl:message>
+  <wsdl:message name="greetMeResponse">
+    <wsdl:part element="x1:greetMeResponse" name="out"/>
+  </wsdl:message>
+  <wsdl:portType name="Greeter">
+    <wsdl:operation name="greetMe">
+      <wsdl:input message="tns:greetMeRequest" name="greetMeRequest"/>
+      <wsdl:output message="tns:greetMeResponse" name="greetMeResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Greeter_SOAPBinding" type="tns:Greeter">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="greetMe">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="greetMeRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="greetMeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SOAPService">
+    <wsdl:port binding="tns:Greeter_SOAPBinding" name="SoapPort">
+      <wsp:PolicyReference URI="#UP_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+      <soap:address location="https://localhost:9001/SoapContext/SoapPort"/>
+    </wsdl:port>
+  </wsdl:service>
+  <!--wsp:Policy xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="UP_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken>
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+                    <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken11/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SupportingTokens>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy-->
+  <wsp:Policy wsu:Id="UP_policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false"/>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic128/>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Lax/>
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp/>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken11/>
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://localhost:9001/SoapContext/SoapPort</con:endpoint></con:endpoints><con:operation id="325727b4-d0e6-4ea2-b95d-4688f885ecb3" isOneWay="false" action="" name="greetMe" bindingOperationName="greetMe" type="Request-Response" outputName="greetMeResponse" inputName="greetMeRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5b7c3c06-2902-4479-b4f5-328a8bb11c4d" name="Request 1" outgoingWss="" incomingWss=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://localhost:9001/SoapContext/SoapPort</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://apache.org/hello_world_soap_http/types">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <typ:greetMe>
+         <typ:requestType>SoapUI!</typ:requestType>
+      </typ:greetMe>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://apache.org/hello_world_soap_http/Greeter/greetMeRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="360634a2-f87d-45b5-9a75-27082ee1d8ef" name="WSSTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="8516afbe-a2a4-4bd1-ac00-79189960f0ef" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="WSSTestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="UsernameTimestampCallGreetMe" id="0cb8244a-7a53-4bf3-8b69-b428d5f89c75"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>Greeter_SOAPBinding</con:interface><con:operation>greetMe</con:operation><con:request name="UsernameTimestampCallGreetMe" id="d156ad47-7d00-4e64-88aa-2cb5839ef2a3" outgoingWss="outgoing_config" incomingWss="incoming_config"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://localhost:9001/SoapContext/SoapPort</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://apache.org/hello_world_soap_http/types">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <typ:greetMe>
+         <typ:requestType>?</typ:requestType>
+      </typ:greetMe>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="32559259-ed7d-4ca0-b0cd-4775ce90b308"/><con:assertion type="WSS Status Assertion" id="eb46e4ef-baa5-424b-942b-cd694c35c7ac" name="WS-Security Status"/><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer><con:crypto><con:source>/work/soapui-cookbook/chapter1/apache-cxf-3.0.1/samples/ws_security/ut_policy/src/main/config/clientKeystore.jks</con:source><con:password>ckpass</con:password><con:type>KEYSTORE</con:type></con:crypto><con:incoming><con:name>incoming_config</con:name><con:decryptCrypto xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><con:signatureCrypto>clientKeystore.jks</con:signatureCrypto></con:incoming><con:outgoing mustUnderstand="true"><con:name>outgoing_config</con:name><con:entry type="Username" username="Alice" password="ecilA"><con:configuration><addCreated>true</addCreated><addNonce>true</addNonce><passwordType>PasswordText</passwordType></con:configuration></con:entry><con:entry type="Timestamp"><con:configuration><timeToLive>10000</timeToLive><strictTimestamp>true</strictTimestamp></con:configuration></con:entry></con:outgoing></con:wssContainer><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

@@ -1,0 +1,30 @@
+Wed Dec 03 14:58:04 GMT 2014:CreateInvoice:TestStep [CreateInvoice] result status is FAILED; [org.apache.http.conn.HttpHostConnectException: Connection to http://localhost:9003 refused]:0
+----------------------------------------------------
+Status: FAILED
+Time Taken: 22
+Size: 0
+Timestamp: Wed Dec 03 14:58:04 GMT 2014
+TestStep: CreateInvoice
+
+----------------- Messages ------------------------------
+org.apache.http.conn.HttpHostConnectException: Connection to http://localhost:9003 refused
+
+----------------- Properties ------------------------------
+Encoding: UTF-8
+Endpoint: http://localhost:9003/ws/invoice/v3
+
+---------------- Request ---------------------------
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inv:createInvoice>
+         <inv:id>4</inv:id>
+         <inv:customerRef>comp4-(ThreadIndex=0 RunCount: 3)</inv:customerRef>
+         <inv:amount>400</inv:amount>
+         <inv:dueDate>2014-12-04Z</inv:dueDate>
+      </inv:createInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+---------------- Response --------------------------
+- missing response / garbage collected -

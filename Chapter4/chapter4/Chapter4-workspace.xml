@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter4" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="Invoice_v2 SOAP schema compliance">/soapui-cookbook/chapter4/Invoice-v2-soapui-project.xml</con:project>
+  <con:project name="invoice_rest_xml_v1">/soapui-cookbook/chapter4/invoice-rest-xml-v1-soapui-project.xml</con:project>
+  <con:project name="invoice_rest_json_schema">/soapui-cookbook/chapter4/invoice-rest-json-schema-soapui-project.xml</con:project>
+  <con:project name="Invoice v2.1 Attachments">/soapui-cookbook/chapter4/Invoice-v2-1-Attachments-soapui-project.xml</con:project>
+  <con:project name="Check for email">/soapui-cookbook/chapter4/Invoice-check-for-email-soapui-project.xml</con:project>
+  <con:project name="Quote SOAP Async">/soapui-cookbook/chapter4/Quote-SOAP-Async-soapui-project.xml</con:project>
+  <con:project name="Quote REST Async Polling">/soapui-cookbook/chapter4/Quote-REST-Async-Polling-soapui-project.xml</con:project>
+  <con:project name="File Tests">/soapui-cookbook/chapter4/File-Tests-soapui-project.xml</con:project>
+  <con:project name="HATEOAS">/soapui-cookbook/chapter4/HATEOAS-soapui-project.xml</con:project>
+</con:soapui-workspace>

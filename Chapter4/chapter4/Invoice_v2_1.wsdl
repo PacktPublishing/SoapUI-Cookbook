@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="InvoiceServiceV2" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://soapui.cookbook.samples/contract/invoice" 
+	xmlns:inv="http://soapui.cookbook.samples/schema/invoice"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://soapui.cookbook.samples/contract/invoice">
+	<documentation>
+		Service: InvoiceService
+		Version: 2.0
+		Owner: SoapUI
+		Cookbook
+	</documentation>
+	<types>
+		<documentation>
+		Notes:
+		1) For simplicity I have chosen to define the types locally. Normally I would use a separate schema file and include/import it.
+		2) JAXWS Wrapper style (which Apache CXF uses) requires that the operation name matches the local name for the 'wrapper' i.e. getInvoice 
+		   - this is an implementation specific choice rather than any kind of WSDL/Schema standard. If you don't do this it will still work, but 
+		   an info message will be displayed by wsdl2java.
+		</documentation>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://soapui.cookbook.samples/schema/invoice"
+			xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+			targetNamespace="http://soapui.cookbook.samples/schema/invoice"
+			elementFormDefault="qualified" version="2.0">
+			<xsd:element name="getInvoice" type="InvoiceRefType"/>
+			<xsd:element name="createInvoice" type="InvoiceDocumentType"/>
+			<xsd:element name="InvoiceDocument" type="InvoiceDocumentType"/>
+			<xsd:element name="Acknowledgement" type="InvoiceRefType"/>
+			<xsd:complexType name="InvoiceRefType">
+					<xsd:sequence>
+						<xsd:element name="invoiceNo" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="InvoiceDocumentType">
+				<xsd:sequence>
+					<xsd:element name="invoiceNo" type="xsd:string"></xsd:element>
+					<xsd:element name="company" type="xsd:string"></xsd:element>
+					<xsd:element name="amount" type="xsd:double"></xsd:element>
+					<xsd:element name="file" type="xsd:base64Binary" 
+					xmime:expectedContentTypes="application/octet-stream"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>	
+		</xsd:schema>
+	</types>
+	<message name="GetInvoiceRequestMessage">
+		<part name="invoiceRef" element="inv:getInvoice"></part>
+	</message>
+	<message name="GetInvoiceResponseMessage">
+		<part name="invoiceDocument" element="inv:InvoiceDocument"></part>
+	</message>
+	<message name="CreateInvoiceRequestMessage">
+		<part name="invoiceDoc" element="inv:createInvoice"></part>
+	</message>
+	<message name="CreateInvoiceResponseMessage">
+		<part name="acknowledgement" element="inv:Acknowledgement"></part>
+	</message>
+	<portType name="InvoicePortType">
+		<documentation>Get and Create An Invoice.
+		</documentation>
+		<operation name="getInvoice">
+			<input name="GetInvoiceInput" message="tns:GetInvoiceRequestMessage"/>
+			<output name="GetInvoiceOutput" message="tns:GetInvoiceResponseMessage"/>
+		</operation>
+		<operation name="createInvoice">
+			<input name="createInvoiceInput" message="tns:CreateInvoiceRequestMessage"/>
+			<output name="createInvoiceOutput" message="tns:CreateInvoiceResponseMessage"/>
+		</operation>
+	</portType>
+	<binding name="InvoicePortBinding" type="tns:InvoicePortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="getInvoice">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/getInvoiceRequest/request" />
+			<input name="GetInvoiceInput">
+				<soap:body use="literal" />
+			</input>
+			<output name="GetInvoiceOutput">
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		<operation name="createInvoice">
+			<soap:operation
+				soapAction="http://soapui.cookbook.samples/createInvoiceRequest/request" />
+			<input name="createInvoiceInput">
+				<soap:body use="literal" />
+			</input>
+			<output name="createInvoiceOutput">
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+	<service name="InvoiceServiceV2">
+		<port name="InvoicePort" binding="tns:InvoicePortBinding">
+			<soap:address location="http://localhost:9002/ws/invoice/v2" />
+		</port>
+	</service>
+</definitions>

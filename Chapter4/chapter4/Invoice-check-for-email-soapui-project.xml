@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="68bb825b-9685-4a5b-b82b-28fe5c73ed56" activeEnvironment="Default" name="Check for email" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="b5e849f2-a5cf-4ab3-a8c3-1f5269632f96" name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="bf36ad19-67eb-4b11-bc91-aa7ff19d0bb2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Check For Email" id="e3578136-4de3-4eab-aedb-963d73a9dd6b"><con:settings/><con:config><script>import java.util.Properties
+import javax.mail.Folder
+import javax.mail.Session
+import javax.mail.Store
+import javax.mail.search.SubjectTerm
+
+//Consider moving these to properties
+def host = "imap.gmail.com"
+def username = "&lt;account>@gmail.com"
+def password = "&lt;password>"
+def orderId = "o12345"
+
+//Consider moving these to a properties file
+Properties props = new Properties();
+props.setProperty("mail.imap.host", host)
+props.setProperty("mail.imap.socketFactory.port","993")
+props.setProperty("mail.imap.socketFactory.class","javax.net.ssl.SSLSocketFactory")
+props.setProperty("mail.imap.ssl.enable", "true")
+props.setProperty("mail.imap.auth","true")
+props.setProperty("mail.imap.port","993")
+   
+Session session = Session.getInstance(props)
+Store store = session.getStore("imap")
+store.connect(host, username, password)
+
+Folder inbox = store.getFolder("inbox")
+inbox.open(Folder.READ_ONLY)
+
+log.info("Total messages in inbox: " + inbox.messageCount)
+
+def foundMessages = inbox.search(new SubjectTerm(orderId));
+
+if (foundMessages.size==0) 
+	testRunner.fail("No order email found for order($orderId).")
+	
+foundMessages.each{
+	log.info "Found matching order email(s): ${it.subject}"
+}
+
+inbox.close(true)
+store.close()
+
+</script></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

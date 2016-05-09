@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="Invoice CRUD Project - Data Driven" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" id="a9274a5d-930a-4443-ad56-1aabc33776e9" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="?_wadl" type="rest" basePath="/" definitionUrl="http://localhost:9000/invoiceservice/v1/?_wadl" id="f50cc252-39c6-4e39-860d-36e3b041e344" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:9000/invoiceservice/v1/?_wadl"><con:part><con:url>http://localhost:9000/invoiceservice/v1/?_wadl</con:url><con:content><![CDATA[<application xmlns="http://wadl.dev.java.net/2009/02" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <grammars>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://v1.invoice.rest" xmlns="http://v1.invoice.rest">
+      <xs:element name="Invoice" type="invoice"/>
+      <xs:complexType name="invoice">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="companyName" type="xs:string"/>
+          <xs:element name="amount" type="xs:double"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://v1.invoice.rest" xmlns="http://v1.invoice.rest">
+      <xs:import/>
+      <xs:element name="Invoice" type="invoice"/>
+    </xs:schema>
+  </grammars>
+  <resources base="http://localhost:9000/">
+    <resource path="/invoiceservice/v1/">
+      <resource path="invoice/">
+        <method name="POST">
+          <request>
+            <representation mediaType="application/json"/>
+          </request>
+          <response>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+      <resource path="invoice/{id}">
+        <param name="id" style="template" type="xs:string"/>
+        <method name="DELETE">
+          <request/>
+          <response>
+            <representation mediaType="application/octet-stream"/>
+          </response>
+        </method>
+        <method name="PUT">
+          <request>
+            <representation mediaType="application/json"/>
+          </request>
+          <response>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+      <resource path="invoice/{id}/">
+        <param name="id" style="template" type="xs:string"/>
+        <method name="GET">
+          <request/>
+          <response>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+    </resource>
+  </resources>
+</application>]]></con:content><con:type>http://wadl.dev.java.net/2009/02</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:9000</con:endpoint></con:endpoints><con:resource name="/invoiceservice/v1/" path="/invoiceservice/v1/" id="a9d1fd32-dea2-4aeb-9af9-ae446f4e5f81"><con:settings/><con:parameters/><con:resource name="invoice/" path="invoice/" id="e7f8a422-16f2-430f-9970-6f79ac2ef235"><con:settings/><con:parameters/><con:method name="POST" method="POST" id="9f0e6534-5421-448a-bf45-67dcf7b2fd4a"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" postQueryString="false" id="86e7b6d9-ef1d-4387-af66-e75c815e8708"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}</con:request><con:originalUri>http://localhost//invoiceservice/v1/invoice/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="invoice/{id}" path="invoice/{id}" id="04f00acd-77cd-4622-8254-594e1e6b2291"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value xsi:nil="true"/><con:style>TEMPLATE</con:style><con:default xsi:nil="true"/></con:parameter></con:parameters><con:method name="DELETE" method="DELETE" id="ea1eda25-390e-46df-912e-d56a0bfe4e77"><con:settings/><con:parameters/><con:representation type="RESPONSE" id=""><con:mediaType>application/octet-stream</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" id="25189f71-d36c-435b-8673-1a3ace217674"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters/></con:request></con:method><con:method name="PUT" method="PUT" id="8b713049-22c2-4b69-8ce3-a304780a47e0"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" id="cc1a1496-9a3d-4c59-ba77-8469572282e4"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters/></con:request></con:method></con:resource><con:resource name="invoice/{id}/" path="invoice/{id}/" id="0dab25ee-fea1-4f09-88a8-4d13974d7eac"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value>12345</con:value><con:style>TEMPLATE</con:style><con:default>12345</con:default></con:parameter></con:parameters><con:method name="GET" method="GET" id="bbf3c613-b8c0-4575-a8f9-44291220afc1"><con:settings/><con:parameters/><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" id="e786d188-6f39-4e4c-93d6-c1b90e61ba30"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:originalUri>http://localhost//invoiceservice/v1/invoice/12345/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="inv0" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource></con:resource></con:interface><con:testSuite name="GroovyDataDrivenInvoiceCRUDTestSuite" id="ee59bf07-f350-4305-90a8-5575afd9ca4b"><con:description>TestSuite generated for REST Service [?_wadl]</con:description><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="InvoiceCRUD TestSuite" searchProperties="true" id="443c934d-0ceb-4ab8-887c-e05d877b57de"><con:settings/><con:testStep type="restrequest" name="invoice/{id} - DELETE" id="371708fa-85d8-43e7-b867-757e14543411" disabled="true"><con:settings/><con:config service="?_wadl" resourcePath="//invoiceservice/v1/invoice/{id}" methodName="DELETE" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="invoice/{id} - DELETE" mediaType="application/json" id="1f8f8cad-85c0-4d27-b96c-8b5a2d966f1b" postQueryString="false"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="LoadAllTestDataFromFile" id="6012d08c-2088-471e-ae84-8a49a3b085ad"><con:settings/><con:config><script>context["rows"]=[]
+
+File testDataFile = new File("/temp/invoices.csv")
+testDataFile.eachLine {content, lineNumber -> 
+   context["rows"] &lt;&lt; content
+}
+
+log.info context["rows"]
+
+context["currentRowIndex"]=0</script></con:config></con:testStep><con:testStep type="groovy" name="GetNextRowAndExractValues" id="14d72dc9-a27d-47b2-82a5-9d6d5f0f187e"><con:settings/><con:config><script>def currentRowIndex = context["currentRowIndex"]
+
+//Get values from csv row
+def rowItems = context["rows"][currentRowIndex].split(/,/)
+def invoiceId = rowItems[0]
+def invoiceCompany = rowItems[1]
+def invoiceAmount = rowItems[2]
+def invoiceDueDate = rowItems[3]
+
+//Create these context properties for use as parameters in the next step
+context["invoiceCompany"]=invoiceCompany
+context["invoiceAmount"]=invoiceAmount
+
+//Increment counter
+context["currentRowIndex"] = currentRowIndex + 1
+</script></con:config></con:testStep><con:testStep type="restrequest" name="invoice/ - POST" id="68adb6ec-ad53-4066-9846-dd5735af8efa"><con:settings/><con:config service="?_wadl" resourcePath="//invoiceservice/v1/invoice/" methodName="POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="invoice/ - POST" mediaType="application/json" postQueryString="false" id="29ac3402-3013-4eb7-be03-503b1f00d1c1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "companyName": "${invoiceCompany}",
+   "amount": "${invoiceAmount}"
+}}</con:request><con:originalUri>http://localhost//invoiceservice/v1/invoice/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="LoopIfMoreRows" id="0bf32242-e881-4575-9431-b6cea5b4f5d2"><con:settings/><con:config><script>def currentRowIndex = context["currentRowIndex"]
+
+if (currentRowIndex &lt; context["rows"].size) 
+     testRunner.gotoStepByName("GetNextRowAndExractValues")
+</script></con:config></con:testStep><con:testStep type="restrequest" name="invoice/{id} PUT" id="a875a4a0-c991-4e4a-bd37-fd9e67d76930" disabled="true"><con:settings/><con:config service="?_wadl" resourcePath="//invoiceservice/v1/invoice/{id}" methodName="PUT" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="invoice/{id} PUT" mediaType="application/json" postQueryString="false" id="438916d2-42fe-4643-aabf-0c5d12df09d1"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="invoice/{id}/ - GET" id="7943e098-bbf5-45b0-a7da-c7d468071494" disabled="true"><con:settings/><con:config service="?_wadl" resourcePath="//invoiceservice/v1/invoice/{id}/" methodName="GET" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="invoice/{id}/ - GET" mediaType="application/json" id="056f8e87-8ca8-45d2-bb63-838bdbe5bd23"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:originalUri>http://localhost//invoiceservice/v1/invoice/12345/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="inv5" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>68adb6ec-ad53-4066-9846-dd5735af8efa</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer><con:databaseConnection><con:name>mysql</con:name><con:driver>com.mysql.jdbc.Driver</con:driver><con:connectionString>jdbc:mysql://127.0.0.1:3306/db?user=user&amp;password=PASS_VALUE</con:connectionString><con:password>pass</con:password></con:databaseConnection></con:databaseConnectionContainer><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

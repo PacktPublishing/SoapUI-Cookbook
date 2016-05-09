@@ -1,0 +1,27 @@
+apply plugin: 'groovy'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
+repositories {
+    mavenCentral()
+	maven { url "http://www.soapui.org/repository/maven2" }
+}
+
+dependencies {
+
+	compile(group: 'com.smartbear.soapui', name: 'soapui', version:'5.1.2-m-SNAPSHOT') {
+		exclude(module: 'jms')
+		exclude(module: 'jtidy' )
+		exclude(module: 'cajo' )
+	}
+	
+	compile files('/soapui-cookbook/chapter5/gradle/lib/jms-1.1.jar')
+}
+
+task runMockAndTest (dependsOn: 'classes', type: JavaExec) {
+    main = 'runmockandtest'
+	args = ['/soapui-cookbook/chapter3/SOAPMock-soapui-project.xml']
+    classpath = sourceSets.main.runtimeClasspath
+}

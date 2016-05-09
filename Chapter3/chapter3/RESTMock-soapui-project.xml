@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="RESTDBMock" resourceRoot="" soapui-version="5.0.0" id="0ea59d45-8c0d-4295-8ab5-a7a669a32e22" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="invoice_crud_v1" type="rest" basePath="" definitionUrl="file:/soapui-cookbook/chapter3/invoice_crud_v1.wadl" id="6d8f3d91-0b8c-4216-af4f-07e6b0aa3baf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/soapui-cookbook/chapter3/invoice_crud_v1.wadl"><con:part><con:url>file:/soapui-cookbook/chapter3/invoice_crud_v1.wadl</con:url><con:content><![CDATA[<application xmlns="http://wadl.dev.java.net/2009/02" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <grammars>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://v1.invoice.rest" xmlns="http://v1.invoice.rest">
+      <xs:element name="Invoice" type="invoice"/>
+      <xs:complexType name="invoice">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="companyName" type="xs:string"/>
+          <xs:element name="amount" type="xs:double"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://v1.invoice.rest" xmlns="http://v1.invoice.rest">
+      <xs:import/>
+      <xs:element name="Invoice" type="invoice"/>
+    </xs:schema>
+  </grammars>
+  <resources base="http://localhost:9000">
+    <resource path="/invoiceservice/v1/">
+      <resource path="invoice/">
+        <method name="POST">
+          <request>
+            <representation mediaType="application/json"/>
+          </request>
+          <response>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+      <resource path="invoice/{id}">
+        <param name="id" style="template" type="xs:string"/>
+        <method name="DELETE">
+          <request/>
+          <response>
+            <representation mediaType="application/octet-stream"/>
+          </response>
+        </method>
+        <method name="PUT">
+          <request>
+            <representation mediaType="application/json"/>
+          </request>
+          <response>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+      <resource path="invoice/{id}/">
+        <param name="id" style="template" type="xs:string"/>
+        <method name="GET">
+          <request/>
+          <response>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+    </resource>
+  </resources>
+</application>]]></con:content><con:type>http://wadl.dev.java.net/2009/02</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://bear-software-macpro.home:8080/</con:endpoint><con:endpoint>http://bear-software-macpro.home:8089/</con:endpoint><con:endpoint>http://localhost:9000</con:endpoint></con:endpoints><con:resource name="/invoiceservice/v1/" path="/invoiceservice/v1/" id="9b794c4e-24b2-4ca5-9699-44e071ddbf51"><con:settings/><con:parameters/><con:resource name="invoice/" path="invoice/" id="1efb333f-f2c8-42f5-a638-80cc97b7713b"><con:settings/><con:parameters/><con:method name="POST" method="POST" id="c4659088-c10b-401b-a239-22c4f3390f97"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" postQueryString="false" id="e0abdd81-e66c-457e-8e32-d735646d73c5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="Accept" value="application/json"/>
+  &lt;con:entry key="Content-Type" value="application/json"/>
+&lt;/xml-fragment></con:setting></con:settings><con:endpoint>http://localhost:8080/dbrest</con:endpoint><con:request>{"invoice": {
+   	"id": 7,
+	"companyName": "Test Company 7",
+	"amount": 555
+}}</con:request><con:originalUri>http://localhost/invoiceservice/v1/invoice/</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="invoice/{id}" path="invoice/{id}" id="57ed3b35-3aff-45c6-8bd2-0d49e97b796e"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value xsi:nil="true"/><con:style>TEMPLATE</con:style><con:default xsi:nil="true"/></con:parameter></con:parameters><con:method name="DELETE" method="DELETE" id="c77bae3c-56a0-4076-a7ff-c19ac1b1034e"><con:settings/><con:parameters/><con:representation type="RESPONSE" id=""><con:mediaType>application/octet-stream</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" id="2f1281f4-b658-4a5d-995d-98a9a24995c4"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:parameters/></con:request></con:method><con:method name="PUT" method="PUT" id="44689fff-08c7-458e-870b-6f8c27c6c721"><con:settings/><con:parameters/><con:representation type="REQUEST" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" id="b2d14e89-f9c7-40d7-af1d-89d54bd262dd"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:parameters/></con:request></con:method></con:resource><con:resource name="invoice/{id}/" path="invoice/{id}" id="79aa5efc-3938-4c5c-9eaa-07ee2be2338d"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value xsi:nil="true"/><con:style>TEMPLATE</con:style><con:default xsi:nil="true"/></con:parameter></con:parameters><con:method name="GET" method="GET" id="8978151a-a9b4-42f0-a92a-708cd5a63981"><con:settings/><con:parameters/><con:representation type="RESPONSE" id=""><con:mediaType>application/json</con:mediaType><con:params/><con:element xsi:nil="true"/><con:description xsi:nil="true"/></con:representation><con:request name="Request 1" mediaType="application/json" id="a8ed5465-1a7b-48a8-b3a6-22443e36872c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080/dbrest</con:endpoint><con:request/><con:originalUri>http://localhost/invoiceservice/v1/invoice//</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="id" value="7" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method></con:resource></con:resource></con:interface><con:restMockService port="8090" path="/" host="localhost" name="REST MockService" docroot="" id="cb5c6434-02e5-44de-80a7-617a2ee42850"><con:settings/><con:startScript>import groovy.sql.Sql
+import org.h2.Driver
+
+com.eviware.soapui.support.GroovyUtils.registerJdbcDriver("org.h2.Driver")
+
+def db = Sql.newInstance("jdbc:h2:mem:test", "org.h2.Driver")
+
+def fileName = "/temp/invoices_with_headers.csv"
+
+//db.execute("drop table invoices")
+
+db.execute("create table if not exists invoices as select * from csvread('$fileName')")
+
+context["databaseConnection"]=db
+</con:startScript><con:properties/><con:restMockAction name="/invoiceservice/v1/application.wadl" method="GET" resourcePath="/invoiceservice/v1/application.wadl" id="2a7e0e83-5046-456d-8541-6a5cb98cdb16"><con:settings/><con:defaultResponse xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*
+// Examples showing how to match based on path, query param and header
+// Match based on path
+def requestPath = mockRequest.getPath()
+log.info "Path: "+ requestPath
+
+if( requestPath.contains("json") )
+{
+    // return the name of the response you want to dispatch
+    return "JSON Response"
+}
+
+
+// Match based on query parameter
+def queryString = mockRequest.getRequest().getQueryString()
+log.info "QueryString: " + queryString
+
+if( queryString.contains("stockholm") )
+{
+    // return the name of the response you want to dispatch
+    return "Response Stockholm"
+}
+else if( queryString.contains("london") )
+{
+    // return the name of the response you want to dispatch
+    return "Response London"
+}
+
+
+// Match based on header
+def acceptEncodingHeadeList = mockRequest.getRequestHeaders().get("Accept-Encoding")
+log.info "AcceptEncodig Header List: " + acceptEncodingHeadeList
+
+if( acceptEncodingHeadeList.contains("gzip,deflate") )
+{
+    // return the name of the response you want to dispatch
+    return "GZiped Response"
+}
+
+*/
+</con:dispatchPath><con:response name="Response 1" httpResponseStatus="200" id="440221b5-3e07-4c88-97e2-7acd694a48f4"><con:settings/><con:responseContent><![CDATA[<application xmlns="http://wadl.dev.java.net/2009/02"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<grammars>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://v1.invoice.rest" attributeFormDefault="unqualified"
+			elementFormDefault="unqualified" targetNamespace="http://v1.invoice.rest">
+			<xs:element name="Invoice" type="invoice" />
+			<xs:complexType name="invoice">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="id" type="xs:string" />
+					<xs:element minOccurs="0" name="companyName" type="xs:string" />
+					<xs:element name="amount" type="xs:double" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://v1.invoice.rest" attributeFormDefault="unqualified"
+			elementFormDefault="unqualified" targetNamespace="http://v1.invoice.rest">
+			<xs:import />
+			<xs:element name="Invoice" type="invoice" />
+		</xs:schema>
+	</grammars>
+	<resources base="http://localhost:9000">
+		<resource path="/invoiceservice/v1/">
+			<resource path="invoice/">
+				<method name="POST">
+					<request>
+						<representation mediaType="application/json" />
+					</request>
+					<response>
+						<representation mediaType="application/json" />
+					</response>
+				</method>
+			</resource>
+			<resource path="invoice/{id}">
+				<param name="id" style="template" type="xs:string" />
+				<method name="DELETE">
+					<request></request>
+					<response>
+						<representation mediaType="application/octet-stream" />
+					</response>
+				</method>
+				<method name="PUT">
+					<request>
+						<representation mediaType="application/json" />
+					</request>
+					<response>
+						<representation mediaType="application/json" />
+					</response>
+				</method>
+			</resource>
+			<resource path="invoice/{id}/">
+				<param name="id" style="template" type="xs:string" />
+				<method name="GET">
+					<request></request>
+					<response>
+						<representation mediaType="application/json" />
+					</response>
+				</method>
+			</resource>
+		</resource>
+	</resources>
+</application>]]></con:responseContent></con:response></con:restMockAction><con:restMockAction name="/invoiceservice/v1/invoice/" method="POST" resourcePath="/invoiceservice/v1/invoice/" id="ed46e044-fd6c-4fb9-856c-363b4751038f"><con:settings/><con:defaultResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Response 1</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath/><con:response name="Response 1" httpResponseStatus="200" id="8cc01621-0919-4955-b7d1-855d7cf249b1" mediaType="application/json"><con:settings/><con:script>import groovy.json.JsonSlurper
+
+def db = context["databaseConnection"]
+
+def slurper = new JsonSlurper()
+def request = slurper.parseText(mockRequest.requestContent)
+
+def requestInvoiceId = request?.invoice?.id
+def requestCompanyName = request?.invoice?.companyName
+def requestAmount = request?.invoice?.amount
+
+db.execute("insert into invoices values ($requestInvoiceId,$requestCompanyName,$requestAmount, null)")
+
+requestContext["responseId"] = requestInvoiceId
+requestContext["responseCompany"] = requestCompanyName
+requestContext["responseAmount"] = requestAmount</con:script><con:responseContent>{"invoice": {
+ "id": ${responseId},
+ "companyName": "${responseCompany}",
+ "amount": ${responseAmount}
+}}
+</con:responseContent></con:response></con:restMockAction><con:restMockAction name="/invoiceservice/v1/invoice/" method="DELETE" resourcePath="/invoiceservice/v1/invoice/" id="534d05e0-81e5-48e5-96b1-6d082c2ef49f"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*
+// Examples showing how to match based on path, query param and header
+// Match based on path
+def requestPath = mockRequest.getPath()
+log.info "Path: "+ requestPath
+
+if( requestPath.contains("json") )
+{
+    // return the name of the response you want to dispatch
+    return "JSON Response"
+}
+
+
+// Match based on query parameter
+def queryString = mockRequest.getRequest().getQueryString()
+log.info "QueryString: " + queryString
+
+if( queryString.contains("stockholm") )
+{
+    // return the name of the response you want to dispatch
+    return "Response Stockholm"
+}
+else if( queryString.contains("london") )
+{
+    // return the name of the response you want to dispatch
+    return "Response London"
+}
+
+
+// Match based on header
+def acceptEncodingHeadeList = mockRequest.getRequestHeaders().get("Accept-Encoding")
+log.info "AcceptEncodig Header List: " + acceptEncodingHeadeList
+
+if( acceptEncodingHeadeList.contains("gzip,deflate") )
+{
+    // return the name of the response you want to dispatch
+    return "GZiped Response"
+}
+
+*/
+</con:dispatchPath><con:response name="Response 1" httpResponseStatus="200" id="ba95b5d0-d3cd-4521-9504-7c908db14a1d"><con:settings/></con:response></con:restMockAction><con:restMockAction name="/invoiceservice/v1/invoice/" method="PUT" resourcePath="/invoiceservice/v1/invoice/" id="c85d203d-2209-443f-8227-40bbbdda7538"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*
+// Examples showing how to match based on path, query param and header
+// Match based on path
+def requestPath = mockRequest.getPath()
+log.info "Path: "+ requestPath
+
+if( requestPath.contains("json") )
+{
+    // return the name of the response you want to dispatch
+    return "JSON Response"
+}
+
+
+// Match based on query parameter
+def queryString = mockRequest.getRequest().getQueryString()
+log.info "QueryString: " + queryString
+
+if( queryString.contains("stockholm") )
+{
+    // return the name of the response you want to dispatch
+    return "Response Stockholm"
+}
+else if( queryString.contains("london") )
+{
+    // return the name of the response you want to dispatch
+    return "Response London"
+}
+
+
+// Match based on header
+def acceptEncodingHeadeList = mockRequest.getRequestHeaders().get("Accept-Encoding")
+log.info "AcceptEncodig Header List: " + acceptEncodingHeadeList
+
+if( acceptEncodingHeadeList.contains("gzip,deflate") )
+{
+    // return the name of the response you want to dispatch
+    return "GZiped Response"
+}
+
+*/
+</con:dispatchPath><con:response name="Response 1" httpResponseStatus="200" id="e23739fb-d62f-43f0-8c2a-18335939914a"><con:settings/></con:response></con:restMockAction><con:restMockAction name="/invoiceservice/v1/invoice//" method="GET" resourcePath="/invoiceservice/v1/invoice/" id="bfd3b4bf-9677-49e8-84c2-79cdc2d884dd"><con:settings/><con:defaultResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">Response 1</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>def db = context["databaseConnection"]
+
+def invoiceNo = mockRequest.getPath().split("/")[-1]
+
+def invoice = db.firstRow("select * from invoices where id = $invoiceNo")
+
+if (invoice==null) return "Response 404"
+
+requestContext["responseInvoiceNo"]=invoice?.id
+requestContext["responseCompany"]=invoice?.company
+requestContext["responseAmount"]=invoice?.amount
+</con:dispatchPath><con:response name="Response 1" httpResponseStatus="200" id="758b1ac1-60f9-490b-8a72-08208e8cf146" mediaType="application/json"><con:settings/><con:script/><con:responseContent>{"invoice": {
+ "id": ${responseId},
+ "companyName": "${responseCompany}",
+ "amount": ${responseAmount}
+}}
+</con:responseContent></con:response><con:response name="Response 404" id="857d8f03-5b78-483b-b0bd-6331e1c64391" httpResponseStatus="404" mediaType="text/xml"><con:settings/><con:responseContent>No invoice ${responseInvoiceNo} found.</con:responseContent></con:response></con:restMockAction></con:restMockService><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>

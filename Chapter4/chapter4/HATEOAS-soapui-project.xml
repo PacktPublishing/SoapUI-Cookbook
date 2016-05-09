@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="f583897f-c5b3-4e70-bd3f-3b8a395283c7" activeEnvironment="Default" name="HATEOAS" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="60afaf59-9ab7-4977-abb3-60c754b8215e" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:8080" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://bear-software-macpro.home:8089/</con:endpoint><con:endpoint>http://localhost:8080</con:endpoint></con:endpoints><con:resource name="" path="/quote/{id}" id="21da0e61-7081-46aa-a647-be0a6e08faac"><con:settings/><con:parameters><con:parameter><con:name>id</con:name><con:value>12345</con:value><con:style>TEMPLATE</con:style><con:default>12345</con:default></con:parameter></con:parameters><con:method name="getQuote" id="ac019d27-2ed0-4e2a-b430-057fbfbd3b99" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>text/html; charset=iso-8859-1</con:mediaType><con:status>200</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/xml</con:mediaType><con:status>200</con:status><con:params/><con:element>quote</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="http://localhost/quote/12345">ns:Response</con:element></con:representation><con:request name="Request 1" id="987c02af-6ef9-43f9-87bc-3f5d4f9b73ec" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder><con:entry/></con:parameterOrder></con:request></con:method></con:resource></con:interface><con:testSuite id="0b735a00-6993-4c77-85db-d261b00793a9" name="http://localhost:8080 TestSuite"><con:description>TestSuite generated for REST Service [http://localhost:8080]</con:description><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="e6157dd3-7bb8-40fd-8663-fbf708c9edba" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="HATEOAS TestCase" searchProperties="true"><con:description>TestCase generated for REST Resource [] located at []</con:description><con:settings/><con:testStep type="restrequest" name="Request XML Quote" id="ecc548d5-e8a2-45bb-8db8-7ffd5fbd469d"><con:settings/><con:config service="http://localhost:8080" resourcePath="/quote/{id}" methodName="getQuote" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Request XML Quote" id="987c02af-6ef9-43f9-87bc-3f5d4f9b73ec" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8080</con:endpoint><con:request/><con:originalUri>http://localhost/quote/12345</con:originalUri><con:assertion type="XPath Match" id="911f87a8-c4dc-429a-aeb4-0e6f94e651f5" name="Customer link should be present"><con:configuration><path>declare namespace atom='http://www.w3.org/2005/Atom';
+//quote[1]/atom:link[2]/@href</path><content>http://localhost:8080/customer/12345</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder><con:entry/></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Get Link From XML Response" id="1cbcf1fe-9e0e-4a99-843c-704f1d282133"><con:settings/><con:config><script>def customerLinkURL = context.expand( '${Request XML Quote#Response#declare namespace atom=\'http://www.w3.org/2005/Atom\'; //quote[1]/atom:link[2]/@href}' )
+log.info customerLinkURL
+
+context["customer-xml-link-url"]=customerLinkURL</script></con:config></con:testStep><con:testStep type="httprequest" name="Call XML Customer Link" id="8c330f41-452a-4b31-ac45-fcefd8ec5426"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="1438df2e-5282-4551-81f5-1cab6e5844b8" name="Call XML Customer Link" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${customer-xml-link-url}</con:endpoint><con:request/><con:assertion type="XPath Match" id="bf1fc409-2f14-471e-9b58-c8c43b61b332" name="XPath Match"><con:configuration><path>//customer[1]/name[1]</path><content>Test Customer</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" name="Expect status 200"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><con:parameter><con:name>id</con:name><con:value>12345</con:value><con:style>TEMPLATE</con:style><con:default>22</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters></con:config></con:testStep><con:testStep type="restrequest" name="Request JSON quote" id="e05b76fd-ae95-4551-9e2a-43adb682efdb"><con:settings/><con:config service="http://localhost:8080" methodName="getQuote" resourcePath="/quote/{id}" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Request JSON quote" id="5ff6ecc4-f241-48d3-aa09-69560414e5d7" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Accept" value="application/json" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/</con:endpoint><con:request/><con:originalUri>http://localhost/quote/12345</con:originalUri><con:assertion type="JsonPath Match" id="419dcb64-eb99-44f3-baa6-4f7e12eb76d0" name="Customer link should be present"><con:configuration><path>$.quote.links[1].href</path><content>http://localhost:8080/customer/12345</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="b811cf4f-abbc-4ac0-bdef-e86591b30e19" name="Script Assertion - Customer link should be present"><con:configuration><scriptText>import groovy.json.JsonSlurper
+
+def slurper = new JsonSlurper()
+def response = slurper.parseText(messageExchange.responseContent)
+
+def customerLink = response?.quote?.links[1].href
+
+assert customerLink=="http://localhost:8080/customer/12345"
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><con:entry key="id" value="12345"/></con:parameters></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Get Link From JSON Response" id="7b6738ef-6143-4a50-9ba7-adb7a59dad52"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+
+//PRO users can use JSONPathto get the href directly..
+//def customerLinkURL = context.expand( '${Request JSON quote#Response#$.quote.links[1].href}' )
+
+def quoteJSONResponse = context.expand('${Request JSON quote#Response}')
+
+def slurper = new JsonSlurper()
+def response = slurper.parseText(quoteJSONResponse)
+
+def customerLinkURL = response?.quote?.links[1].href
+
+log.info customerLinkURL
+context["customer-json-link-url"]=customerLinkURL</script></con:config></con:testStep><con:testStep type="httprequest" name="Call JSON Customert Link" id="6a1bda2b-84a5-4766-b885-c70578030cb0"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" name="Call JSON Customert Link" id="0c9d489c-4fc9-449e-bb51-0d63e43d3dc7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Accept" value="application/json" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:endpoint>${customer-json-link-url}</con:endpoint><con:request/><con:assertion type="JsonPath Match" id="5ca8809d-b384-47b6-b463-1397f722ded2" name="Customer name should be Test Customer"><con:configuration><path>$.customer.name</path><content>Test Customer</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Script Assertion - Customer name should be Test Customer" id="6d098da3-0660-47c7-9174-a396b7f5603e"><con:configuration><scriptText>import groovy.json.JsonSlurper
+
+def slurper = new JsonSlurper()
+def response = slurper.parseText(messageExchange.responseContent)
+
+def customerName = response?.customer?.name
+
+assert customerName=="Test Customer"</scriptText></con:configuration></con:assertion><con:assertion type="Valid HTTP Status Codes" name="Expect status 200"><con:configuration><codes>200</codes></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><con:parameter><con:name>id</con:name><con:value>12345</con:value><con:style>TEMPLATE</con:style><con:default>12345</con:default><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:restMockService id="adad2a38-8d73-4ff6-9d0a-873eec419e1d" port="8080" path="/" host="localhost" name="REST MockService 1" docroot=""><con:settings/><con:properties/><con:restMockAction name="/quote/" method="GET" resourcePath="/quote/" id="48025d2d-b6ea-4621-bf13-9756bc6aec3a"><con:settings/><con:defaultResponse>quote XML</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>def requestPath = mockRequest.getPath()
+def acceptHeader = mockRequest.getRequestHeaders().get("Accept")
+log.info "Path: "+ requestPath
+log.info "Accept Header: "+acceptHeader
+
+if(requestPath.endsWith(".json") || acceptHeader?.contains("application/json"))
+{
+	log.info "Matched JSON"
+    	return "quote JSON"    	
+}
+else if (requestPath.endsWith(".xml") || acceptHeader?.contains("application/xml") 
+		|| acceptHeader?.contains("text/xml"))
+{
+	log.info "Matched XML"
+  	return "quote XML"
+}
+log.info "No match - returning default"
+</con:dispatchPath><con:response name="quote XML" id="7840ef0b-4aa0-4bc7-8161-5f395dd9ea50" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<quote xmlns:atom="http://www.w3.org/2005/Atom">
+    <id>12345</id>
+    <amount>100</amount>
+    <atom:link rel="self" href="http://localhost:8080/quote/777"/>
+    <atom:link rel="customer" href="http://localhost:8080/customer/12345"/>
+</quote>]]></con:responseContent></con:response><con:response name="quote JSON" id="5d68d744-d620-4ea0-b5e9-193839822664" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:responseContent>{
+    "quote": {
+        "id": 12345,
+        "amount": 100,
+        "links": [
+            {
+                "rel": "self",
+                "href": "http://localhost:8080/quote/777"
+            },
+            {
+                "rel": "customer",
+                "href": "http://localhost:8080/customer/12345"
+            }
+        ]
+    }
+}</con:responseContent></con:response></con:restMockAction><con:restMockAction name="/customer/" method="GET" resourcePath="/customer/" id="35f16246-82cb-4657-b0f5-89e420bf8fdf"><con:settings/><con:defaultResponse>Customer XML</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>def requestPath = mockRequest.getPath()
+def acceptHeader = mockRequest.getRequestHeaders().get("Accept")
+log.info "Path: "+ requestPath
+log.info "Accept Header: "+acceptHeader
+
+if(requestPath.endsWith(".json") || acceptHeader?.contains("application/json"))
+{
+	log.info "Matched JSON"
+    	return "Customer JSON"    	
+}
+else if (requestPath.endsWith(".xml") || acceptHeader?.contains("application/xml") 
+		|| acceptHeader?.contains("text/xml"))
+{
+	log.info "Matched XML"
+  	return "Customer XML"
+}
+log.info "No match - returning default"
+</con:dispatchPath><con:response name="Customer XML" id="89b0a0a4-de26-48b1-aa3b-132ec4e5578a" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<customer xmlns:atom="http://www.w3.org/2005/Atom">
+	<id>12345</id>
+	<name>Test Customer</name>
+	<atom:link rel="self" href="http://localhost:8080/customer/12345"/>
+</customer>]]></con:responseContent></con:response><con:response name="Customer JSON" id="b587a58b-aa2d-4db3-af87-d57ed6c43707" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:responseContent>{
+    "customer": {
+        "id": 12345,
+        "name": "Test Customer",
+        "links": [
+            {
+                "rel": "self",
+                "href": "http://localhost:8080/quote/777"
+            }
+        ]
+    }
+}</con:responseContent></con:response></con:restMockAction></con:restMockService><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>

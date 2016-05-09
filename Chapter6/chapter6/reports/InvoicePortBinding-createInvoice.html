@@ -1,0 +1,88 @@
+<html xmlns:cov="http://eviware.com/soapui/coverage">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>InvoicePortBinding -
+         createInvoice
+      </title>
+      <link rel="stylesheet" type="text/css" href="coverage.css">
+   </head>
+   <body>
+      <div id="page">
+         <h1>InvoicePortBinding -
+            createInvoice
+         </h1>
+         <table class="contractCoverage">
+            <tr>
+               <td class="header">Number of Nodes</td>
+               <td class="count">6</td>
+            </tr>
+            <tr>
+               <td class="header">Covered Nodes</td>
+               <td class="count">6</td>
+               <td class="percent">100%</td>
+            </tr>
+            <tr>
+               <td class="header">Asserted Nodes</td>
+               <td class="count">0</td>
+               <td class="percent">0%</td>
+            </tr>
+         </table>
+         <h3>Request</h3>
+         <table class="contractCoverage">
+            <tr>
+               <td class="header">Number of Nodes</td>
+               <td class="count">4</td>
+            </tr>
+            <tr>
+               <td class="header">Covered Nodes</td>
+               <td class="count">4</td>
+               <td class="percent">100%</td>
+            </tr>
+            <tr>
+               <td class="header">Asserted Nodes</td>
+               <td class="count">0</td>
+               <td class="percent">0%</td>
+            </tr>
+         </table>
+         <div class="message">
+            <p class="coverage-">&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice"&gt;</p>
+            <p class="coverage-">   &lt;soapenv:Header/&gt;</p>
+            <p class="coverage-">   &lt;soapenv:Body&gt;</p>
+            <p class="coverage-true">      &lt;inv:createInvoice&gt;</p>
+            <p class="coverage-true">         &lt;inv:invoiceNo&gt;?&lt;/inv:invoiceNo&gt;</p>
+            <p class="coverage-true">         &lt;inv:company&gt;?&lt;/inv:company&gt;</p>
+            <p class="coverage-true">         &lt;inv:amount&gt;?&lt;/inv:amount&gt;</p>
+            <p class="coverage-true">      &lt;/inv:createInvoice&gt;</p>
+            <p class="coverage-">   &lt;/soapenv:Body&gt;</p>
+            <p class="coverage-">&lt;/soapenv:Envelope&gt;</p>
+         </div>
+         <h3>Response</h3>
+         <table class="contractCoverage">
+            <tr>
+               <td class="header">Number of Nodes</td>
+               <td class="count">2</td>
+            </tr>
+            <tr>
+               <td class="header">Covered Nodes</td>
+               <td class="count">2</td>
+               <td class="percent">100%</td>
+            </tr>
+            <tr>
+               <td class="header">Asserted Nodes</td>
+               <td class="count">0</td>
+               <td class="percent">0%</td>
+            </tr>
+         </table>
+         <div class="message">
+            <p class="coverage-">&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inv="http://soapui.cookbook.samples/schema/invoice"&gt;</p>
+            <p class="coverage-">   &lt;soapenv:Header/&gt;</p>
+            <p class="coverage-">   &lt;soapenv:Body&gt;</p>
+            <p class="coverage-true">      &lt;inv:Acknowledgement&gt;</p>
+            <p class="coverage-true">         &lt;inv:invoiceNo&gt;?&lt;/inv:invoiceNo&gt;</p>
+            <p class="coverage-true">      &lt;/inv:Acknowledgement&gt;</p>
+            <p class="coverage-">   &lt;/soapenv:Body&gt;</p>
+            <p class="coverage-">&lt;/soapenv:Envelope&gt;</p>
+         </div>
+      </div>
+   </body>
+</html>

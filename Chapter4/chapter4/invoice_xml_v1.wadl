@@ -1,0 +1,30 @@
+<application xmlns="http://wadl.dev.java.net/2009/02"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://v1.invoice.rest">
+	<grammars>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://v1.invoice.rest" targetNamespace="http://v1.invoice.rest"
+			elementFormDefault="unqualified">
+			<xs:element name="invoice" type="tns:InvoiceType" />
+			<xs:complexType name="InvoiceType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:string" />
+					<xs:element name="companyName" type="xs:string" />
+					<xs:element name="amount" type="xs:double" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</grammars>
+	<resources base="http://localhost:8080">
+		<resource path="/invoiceservice/v1/">
+			<resource path="invoice/{id}">
+				<param name="id" style="template" type="xs:string" />
+				<method name="GET">
+					<request></request>
+					<response>
+						<representation mediaType="application/xml" element="tns:invoice" />
+					</response>
+				</method>
+			</resource>
+		</resource>
+	</resources>
+</application>

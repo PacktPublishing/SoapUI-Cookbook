@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="680b55a9-e79e-438a-bda2-68cb7c4ad494" activeEnvironment="Default" name="Rest Discovery Sample Project" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="Port">8081</con:setting></con:settings><con:interface xsi:type="con:RestService" id="033e89fe-bf54-4647-88ae-06bd68ee5bf3" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:9000" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart=""/><con:endpoints><con:endpoint>http://localhost:9000</con:endpoint></con:endpoints><con:resource name="V1" path="/invoiceservice/v1" id="70771563-08c6-4fb7-99a8-938fd176a719"><con:settings/><con:parameters/><con:method name="V1" id="6cc5806c-ff8b-4424-a5b8-334d310acba4" method="GET"><con:settings/><con:parameters><con:parameter><con:name>_wadl</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:path xsi:nil="true"/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:request name="Request 1" id="3c870986-656e-4f38-b6d1-0403c3b7fe66" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:parameters/><con:parameterOrder><con:entry>_wadl</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:resource name="Invoiceservice" path="/invoiceservice/" id="74127cca-83ef-4fc2-882c-890285ef8c3d"><con:settings/><con:parameters/><con:method name="Invoiceservice" id="1565ef24-08e8-405b-8a40-c160e6db8be8" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="0cb7ef2e-4ee6-42f7-a04c-70a642e83ac0" mediaType="text/plain; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:parameters/></con:request></con:method></con:resource><con:resource name="Invoice" path="/invoiceservice/v1/invoice/" id="48f1c30f-275a-483f-a2de-0c6694781cca"><con:settings/><con:parameters/><con:method name="Invoice" id="ec9c48a1-be88-47a8-92e6-83c563a463b1" method="POST"><con:settings/><con:parameters/><con:request name="Request 1" id="f3f7b394-97c4-4299-8caa-477feb877187" mediaType="text/plain; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:parameters/></con:request><con:request name="Request 2" id="6e2160e4-0848-41dc-8ab3-d33c2423690a" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:parameters/></con:request><con:request name="Request 3" id="516c9128-d0cf-46c1-8ccf-4e856731ccc0" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:parameters/></con:request></con:method></con:resource><con:resource name="Inv0" path="/invoiceservice/v1/invoice/inv0" id="bbd20b0c-20c4-4ef4-9d87-d3e03a12cd00"><con:settings/><con:parameters/><con:method name="Inv0" id="6baa032c-853f-4e91-bb79-fa6e05ccffcd" method="PUT"><con:settings/><con:parameters/><con:request name="Request 1" id="fa5519ec-cc30-4c71-b64d-3bd5a18d5aa1" mediaType="application/json; charset=UTF-8" postQueryString="false"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="Request 2" id="70ad2887-6b2f-4996-89f5-ba9b1ad6ae91" mediaType="application/json; charset=UTF-8" postQueryString="false"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request><con:request name="Request 3" id="ecc852c4-c3ed-47c2-befb-a693b67498b9" mediaType="application/json; charset=UTF-8" postQueryString="false"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="Inv0" id="9618c8d9-ef07-4ebd-ba29-82a9edf3058c" method="GET"><con:settings/><con:parameters/><con:request name="Request 1" id="4acb1bed-2bf5-4a58-b575-54367805c0c7" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:parameters/></con:request><con:request name="Request 2" id="fd511050-c411-448e-812c-c3c985fab258" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:parameters/></con:request></con:method><con:method name="Inv0" id="a65143c7-f7ee-4f08-957f-1da70a16f0e8" method="DELETE"><con:settings/><con:parameters/><con:request name="Request 1" id="1718313f-431e-45d4-9cc8-d2ff1d39910a" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite id="2cee5a9a-71f8-41bc-af3a-ea9277b97c9a" name="TestSuite Rest Discovery"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="62ae12f1-b241-4bb0-974e-ace2d70bfa55" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true"><con:settings/><con:testStep type="restrequest" name="V1 - Request 1" id="ea3b1692-2e2f-4af8-b9a0-27d8917d3da1"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1" methodName="V1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="V1 - Request 1" id="3c870986-656e-4f38-b6d1-0403c3b7fe66" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder><con:entry>_wadl</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Invoiceservice - Request 1" id="75af4ecd-cd97-46f5-b078-d8ef816b6470"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/" methodName="Invoiceservice" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Invoiceservice - Request 1" id="0cb7ef2e-4ee6-42f7-a04c-70a642e83ac0" mediaType="text/plain; charset=UTF-8" postQueryString="false"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Invoice - Request 1" id="6487a9c3-b666-4da6-b80c-83087e680385"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/" methodName="Invoice" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Invoice - Request 1" id="f3f7b394-97c4-4299-8caa-477feb877187" mediaType="text/plain; charset=UTF-8" postQueryString="false"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Invoice - Request 2" id="d4044a52-f4f6-45a0-8415-ac06b49ec0fa"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/" methodName="Invoice" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Invoice - Request 2" id="6e2160e4-0848-41dc-8ab3-d33c2423690a" mediaType="application/json; charset=UTF-8" postQueryString="false"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Inv0 - Request 1" id="817067f8-3d1d-4f93-bcf2-4af73bc43660"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/inv0" methodName="Inv0" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Inv0 - Request 1" id="fa5519ec-cc30-4c71-b64d-3bd5a18d5aa1" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Inv0 - Request 2" id="9edfc339-8e11-4d43-b429-19461935363d"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/inv0" methodName="Inv0" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Inv0 - Request 2" id="70ad2887-6b2f-4996-89f5-ba9b1ad6ae91" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Invoice - Request 3" id="21b1d620-1119-4497-819b-a03920ad6df6"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/" methodName="Invoice" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Invoice - Request 3" id="516c9128-d0cf-46c1-8ccf-4e856731ccc0" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Test Company",
+"amount": 100
+}}
+</con:request><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Inv0 - Request 3" id="b4e6418b-2c94-490e-b337-ce87ff98e3a9"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/inv0" methodName="Inv0" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Inv0 - Request 3" id="ecc852c4-c3ed-47c2-befb-a693b67498b9" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Inv0 - Request 1 1" id="de554756-b840-49a0-80d3-5ec6d29f0fd9"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/inv0" methodName="Inv0" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Inv0 - Request 1 1" id="4acb1bed-2bf5-4a58-b575-54367805c0c7" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Inv0 - Request 1 2" id="8759f8cc-19f0-4088-b5fe-287ca7af1093"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/inv0" methodName="Inv0" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Inv0 - Request 1 2" id="1718313f-431e-45d4-9cc8-d2ff1d39910a" mediaType="application/json; charset=UTF-8"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request>{"Invoice": {
+   "id": 12345,
+"companyName": "Real Company",
+"amount": 200
+}}
+</con:request><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="Inv0 - Request 2 1" id="3e78d72e-9f82-4e7a-8f3f-bb636bddc3da"><con:settings/><con:config service="http://localhost:9000" resourcePath="/invoiceservice/v1/invoice/inv0" methodName="Inv0" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Inv0 - Request 2 1" id="fd511050-c411-448e-812c-c3c985fab258" mediaType="application/json"><con:settings/><con:endpoint>http://localhost:9000</con:endpoint><con:request/><con:parameters/></con:restRequest></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

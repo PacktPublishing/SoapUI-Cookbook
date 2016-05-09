@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter3" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="SOAPDBMock">/soapui-cookbook/chapter3/SOAPMock-soapui-project.xml</con:project>
+  <con:project name="RESTDBMock">/soapui-cookbook/chapter3/RESTMock-soapui-project.xml</con:project>
+  <con:project name="RESTContentNegotiation">/soapui-cookbook/chapter3/RESTContentNegotiation-soapui-project.xml</con:project>
+</con:soapui-workspace>

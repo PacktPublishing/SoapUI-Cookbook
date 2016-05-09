@@ -1,0 +1,18 @@
+2014-12-03 15:43:50,106 WARN  [SoapUI] Missing folder [/soapui-cookbook/chapter9/groovy/ext] for external libraries
+2014-12-03 15:43:50,587 INFO  [DefaultSoapUICore] initialized soapui-settings from [/Users/bearsoftware/soapui-settings.xml]
+2014-12-03 15:43:50,622 INFO  [HttpClientSupport$Helper] Initializing KeyStore
+2014-12-03 15:43:53,748 INFO  [WsdlProject] Loaded project from [file:/soapui-cookbook/chapter9/groovy/../InvoiceV3LoadTest-soapui-project.xml]
+2014-12-03 15:43:53,763 INFO  [SoapUILoadTestRunner] Running LoadTest [SeperateDataPerThreadLoadTest]
+2014-12-03 15:43:53,768 INFO  [SoapUILoadTestRunner] Overriding limit [10000] with specified [100]
+2014-12-03 15:43:53,883 INFO  [log] Load test setup script:
+2014-12-03 15:43:53,883 INFO  [log] Loading test file data into load test context...
+2014-12-03 15:43:54,607 INFO  [SoapUILoadTestRunner] LoadTest [SeperateDataPerThreadLoadTest] progress: 0.0, 10
+2014-12-03 15:43:55,623 INFO  [SoapUILoadTestRunner] LoadTest [SeperateDataPerThreadLoadTest] progress: 0.0, 10
+2014-12-03 15:43:56,623 INFO  [SoapUILoadTestRunner] LoadTest [SeperateDataPerThreadLoadTest] progress: 0.68, 10
+2014-12-03 15:43:57,080 INFO  [log] Load test teardown script:
+2014-12-03 15:43:57,624 INFO  [SoapUILoadTestRunner] LoadTest [SeperateDataPerThreadLoadTest] finished with status FINISHED
+2014-12-03 15:43:57,624 INFO  [SoapUILoadTestRunner] Exporting log and statistics for LoadTest [SeperateDataPerThreadLoadTest]
+2014-12-03 15:43:57,630 INFO  [SoapUILoadTestRunner] Exported 2 log items to [/soapui-cookbook/chapter9/reports/SeperateDataPerThreadLoadTest-log.txt]
+2014-12-03 15:43:57,630 INFO  [SoapUILoadTestRunner] Exported 0 error results
+2014-12-03 15:43:57,631 INFO  [SoapUILoadTestRunner] Exported 3 statistics to [/soapui-cookbook/chapter9/reports/SeperateDataPerThreadLoadTest-statistics.txt]
+2014-12-03 15:43:57,632 INFO  [SoapUILoadTestRunner] SoapUI suite [TestSuite-Seperate Data Per Thread] finished in 3870ms

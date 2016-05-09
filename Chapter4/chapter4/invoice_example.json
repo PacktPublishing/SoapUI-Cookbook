@@ -1,0 +1,5 @@
+{"invoice": {
+   "id": 12345,
+   "companyName": "Test Company",
+   "amount": 100
+}}

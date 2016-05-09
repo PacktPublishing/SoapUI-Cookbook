@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="Chapter10" soapui-version="5.1.1" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:recentItemCollection>
+    <con:moduleId>StarterPageModule</con:moduleId>
+    <con:itemId>56b6e788-3c09-482e-868c-5dfbdeab4d57</con:itemId>
+  </con:recentItemCollection>
+  <con:recentItemCollection>
+    <con:moduleId>ProjectsModule</con:moduleId>
+    <con:itemId>691b4a76-a676-4dc4-a2ca-8c9092466a92</con:itemId>
+    <con:itemId>328fab10-9233-4d4e-b655-1b2edc0cdc41</con:itemId>
+    <con:itemId>7ca02a36-d435-4933-a193-502257bed32b</con:itemId>
+  </con:recentItemCollection>
+  <con:recentItemCollection>
+    <con:moduleId>SoapUiNGModule</con:moduleId>
+    <con:itemId>a5668ffb-e0c3-45d1-84c1-3ccbbc444252</con:itemId>
+    <con:itemId>c3bbf510-91ec-42f4-a8a1-b9582c9f373d</con:itemId>
+    <con:itemId>041f8eed-c767-41ee-82e4-c66fee148ebf</con:itemId>
+    <con:itemId>fdc6f4da-ea38-4d0d-8f48-27f297a855ed</con:itemId>
+    <con:itemId>43a7b78c-5219-4941-bdd2-b042f9f9aff0</con:itemId>
+  </con:recentItemCollection>
+  <con:navigatorNodeCollection>
+    <con:rootNodeLabel>Projects</con:rootNodeLabel>
+    <con:expandNodeState>
+      <con:id>56b6e788-3c09-482e-868c-5dfbdeab4d57</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>7ca02a36-d435-4933-a193-502257bed32b</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>328fab10-9233-4d4e-b655-1b2edc0cdc41</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>c492d8e9-38c5-4fa8-893b-8ae6b33cfea7</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+  </con:navigatorNodeCollection>
+  <con:navigatorNodeCollection>
+    <con:rootNodeLabel>SoapUI NG</con:rootNodeLabel>
+    <con:expandNodeState>
+      <con:id>56b6e788-3c09-482e-868c-5dfbdeab4d57</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>a5668ffb-e0c3-45d1-84c1-3ccbbc444252</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+    <con:expandNodeState>
+      <con:id>041f8eed-c767-41ee-82e4-c66fee148ebf</con:id>
+      <con:expandState>true</con:expandState>
+    </con:expandNodeState>
+  </con:navigatorNodeCollection>
+  <con:navigatorNodeCollection>
+    <con:rootNodeLabel>LoadUI</con:rootNodeLabel>
+    <con:expandNodeState>
+      <con:id>56b6e788-3c09-482e-868c-5dfbdeab4d57</con:id>
+      <con:expandState>false</con:expandState>
+    </con:expandNodeState>
+  </con:navigatorNodeCollection>
+  <con:project name="EmailTestStepProject">/soapui-cookbook/chapter10/EmailTestStepProject-soapui-project.xml</con:project>
+  <con:project name="GroovyConsoleProject">/soapui-cookbook/chapter10/GroovyConsoleProject-soapui-project.xml</con:project>
+</con:soapui-workspace>
